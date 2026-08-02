@@ -1,704 +1,1042 @@
-<!DOCTYPE html>
-<html lang="en">
+
+<html lang="en" class="h-full bg-[#FAF7F2]">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Re-Poopulate — Guided Help to Rebuild Your Gut Biome</title>
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Re-Poopulate — Guided help to rebuild your gut biome</title>
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-          },
-          colors: {
-            brand: {
-              cream: '#FAF7F2',
-              sage: '#2E5A44',
-              sagelight: '#EAF1EC',
-              oat: '#F1ECE1',
-              terracotta: '#C86D51',
-              amber: '#D97706',
-              charcoal: '#1F2937',
+    <!-- PWA Web App Manifest (Inline Web Manifest Data) -->
+    <link rel="manifest" href='data:application/manifest+json,{
+      "name": "Re-Poopulate",
+      "short_name": "Re-Poopulate",
+      "start_url": "/",
+      "display": "standalone",
+      "background_color": "#FAF7F2",
+      "theme_color": "#2E5A44",
+      "description": "Guided help to rebuild your gut biome.",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌱</text></svg>",
+          "sizes": "192x192 512x512",
+          "type": "image/svg+xml"
+        }
+      ]
+    }'>
+
+    <!-- Apple iOS Home Screen Capable & Web App Styling -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Re-Poopulate">
+    <meta name="theme-color" content="#2E5A44">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%232E5A44%22/><text x=%2250%%22 y=%2255%%22 dominant-baseline=%22central%22 text-anchor=%22middle%22 font-size=%2260%22>🦠</text></svg>">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FAF7F2',
+                        oat: '#F2ECE1',
+                        'oat-dark': '#E2D7C5',
+                        sage: {
+                            50: '#F2F7F4',
+                            100: '#E1ECE5',
+                            500: '#4A7C59',
+                            600: '#3D684A',
+                            800: '#26422F',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
             }
-          }
         }
-      }
-    }
-  </script>
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #F2ECE1;
+            border-radius: 999px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #4A7C59;
+            border-radius: 999px;
+        }
+    </style>
 </head>
-<body class="bg-brand-cream text-brand-charcoal font-sans min-h-screen pb-16">
+<body class="font-sans text-stone-800 h-full flex flex-col antialiased bg-[#FAF7F2] selection:bg-sage-100">
 
-  <!-- Header / Navigation -->
-  <header class="bg-white border-b border-stone-200 sticky top-0 z-30 shadow-sm">
-    <div class="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
-      <div>
-        <h1 class="text-2xl font-extrabold text-brand-sage tracking-tight flex items-center gap-2">
-          Re-Poopulate <span class="text-xl">🌱</span>
-        </h1>
-        <p class="text-xs font-medium text-stone-500">Guided help to rebuild your gut biome</p>
-      </div>
-      <span class="text-xs bg-brand-sagelight text-brand-sage px-2.5 py-1 rounded-full font-bold">
-        v1.2 Beta
-      </span>
-    </div>
-  </header>
-
-  <!-- Main Container -->
-  <main class="max-w-3xl mx-auto px-4 pt-6 space-y-6">
-
-    <!-- Track Selector -->
-    <section>
-      <label class="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-2">Select Your Recovery Track</label>
-      <div class="grid grid-cols-3 gap-2">
-        <button onclick="setTrack('colonoscopy')" id="btn-colonoscopy" class="track-btn px-3 py-3 rounded-xl border text-sm font-bold transition flex flex-col items-center justify-center gap-1 bg-brand-sage text-white border-brand-sage shadow-sm">
-          <span class="text-lg">🩺</span>
-          <span>Colonoscopy</span>
-        </button>
-        <button onclick="setTrack('antibiotics')" id="btn-antibiotics" class="track-btn px-3 py-3 rounded-xl border text-sm font-bold transition flex flex-col items-center justify-center gap-1 bg-white text-stone-700 border-stone-200 hover:border-brand-sage">
-          <span class="text-lg">💊</span>
-          <span>Antibiotics</span>
-        </button>
-        <button onclick="setTrack('foodbug')" id="btn-foodbug" class="track-btn px-3 py-3 rounded-xl border text-sm font-bold transition flex flex-col items-center justify-center gap-1 bg-white text-stone-700 border-stone-200 hover:border-brand-sage">
-          <span class="text-lg">🤢</span>
-          <span>Food Bug</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- Track Intro Banner (Reassuring framing) -->
-    <section id="intro-banner" class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm space-y-2">
-      <!-- Populated dynamically via JS -->
-    </section>
-
-    <!-- Phase / Day Selector & Global Search Controls -->
-    <section class="space-y-4">
-      
-      <!-- Day Tabs (Hidden when global search query is active) -->
-      <div id="day-tabs-container">
-        <label class="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-2">Recovery Phase</label>
-        <div class="grid grid-cols-3 gap-2">
-          <button onclick="setDay(1)" id="day-tab-1" class="day-tab px-3 py-2.5 rounded-xl border text-xs font-bold transition bg-brand-sage text-white border-brand-sage">
-            Day 1: Soothe
-          </button>
-          <button onclick="setDay(2)" id="day-tab-2" class="day-tab px-3 py-2.5 rounded-xl border text-xs font-bold transition bg-white text-stone-700 border-stone-200">
-            Day 2: Seed
-          </button>
-          <button onclick="setDay(3)" id="day-tab-3" class="day-tab px-3 py-2.5 rounded-xl border text-xs font-bold transition bg-white text-stone-700 border-stone-200">
-            Day 3: Feed
-          </button>
-        </div>
-      </div>
-
-      <!-- Search Input & Filters -->
-      <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-sm space-y-3">
-        <!-- Search Bar -->
-        <div class="relative">
-          <input 
-            type="text" 
-            id="search-input" 
-            oninput="handleSearch(this.value)" 
-            placeholder="Search any food across all days (e.g. Salmon, Coffee, Rice)..." 
-            class="w-full pl-10 pr-4 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-sage focus:bg-white transition"
-          />
-          <span class="absolute left-3.5 top-3 text-stone-400 text-sm">🔍</span>
-          <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-3 top-2.5 text-xs text-stone-400 hover:text-stone-600 bg-stone-200 px-2 py-1 rounded-md">
-            Clear
-          </button>
-        </div>
-
-        <!-- Filter Chips: Diet & Status -->
-        <div class="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-stone-100 text-xs">
-          <!-- Diet Filters -->
-          <div class="flex items-center gap-1">
-            <span class="text-stone-400 font-medium mr-1">Diet:</span>
-            <button onclick="setDiet('all')" id="diet-all" class="diet-chip px-2.5 py-1 rounded-lg font-bold bg-stone-800 text-white">All</button>
-            <button onclick="setDiet('veg')" id="diet-veg" class="diet-chip px-2.5 py-1 rounded-lg font-bold bg-stone-100 text-stone-600 hover:bg-stone-200">Vegetarian 🌿</button>
-            <button onclick="setDiet('vegan')" id="diet-vegan" class="diet-chip px-2.5 py-1 rounded-lg font-bold bg-stone-100 text-stone-600 hover:bg-stone-200">Vegan 🌱</button>
-          </div>
-
-          <!-- Status Filters -->
-          <div class="flex items-center gap-1">
-            <button onclick="setStatus('all')" id="status-all" class="status-chip px-2.5 py-1 rounded-lg font-bold bg-stone-800 text-white">All</button>
-            <button onclick="setStatus('safe')" id="status-safe" class="status-chip px-2.5 py-1 rounded-lg font-bold bg-emerald-100 text-emerald-800">Safe ✅</button>
-            <button onclick="setStatus('caution')" id="status-caution" class="status-chip px-2.5 py-1 rounded-lg font-bold bg-amber-100 text-amber-800">Caution ⚠️</button>
-            <button onclick="setStatus('avoid')" id="status-avoid" class="status-chip px-2.5 py-1 rounded-lg font-bold bg-red-100 text-red-800">Avoid ⛔</button>
-          </div>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- Global Search Indicator Banner -->
-    <div id="search-mode-banner" class="hidden bg-amber-50 border border-amber-200 p-3 rounded-xl text-xs text-amber-800 flex items-center justify-between">
-      <span>🔎 Showing results across <strong>all days/phases</strong> for <mark class="bg-amber-200 px-1 rounded" id="search-query-display"></mark></span>
-      <button onclick="clearSearch()" class="font-bold underline text-amber-900">Reset Search</button>
-    </div>
-
-    <!-- Food Cards List Container -->
-    <section id="food-list" class="space-y-3">
-      <!-- Cards rendered dynamically via JS -->
-    </section>
-
-    <!-- Smart Fallback Card (Triggered when 0 search results match) -->
-    <section id="fallback-card" class="hidden bg-white p-6 rounded-2xl border border-stone-200 shadow-sm space-y-4">
-      <div class="flex items-center gap-3">
-        <span class="text-3xl">💡</span>
-        <div>
-          <h3 class="font-bold text-stone-800 text-base">Food not explicitly listed?</h3>
-          <p class="text-xs text-stone-500">We haven't cataloged "<span id="fallback-term" class="font-bold text-stone-700"></span>" yet, but here is your quick guide.</p>
-        </div>
-      </div>
-
-      <!-- Quick Rule of Thumb -->
-      <div class="bg-stone-50 p-4 rounded-xl border border-stone-200 space-y-1.5 text-xs">
-        <span class="font-bold text-brand-sage uppercase tracking-wider text-[10px]">Rule of Thumb for Your Current Phase</span>
-        <p id="fallback-rule" class="text-stone-700 leading-relaxed font-medium">
-          <!-- Dynamic rule inserted via JS -->
-        </p>
-      </div>
-
-      <!-- AI Prompt Copy Action -->
-      <div class="space-y-2 pt-1 border-t border-stone-100">
-        <p class="text-xs text-stone-500">Want a personalized, science-based breakdown for this specific food?</p>
-        <button onclick="copyAIPrompt()" class="w-full bg-brand-sage hover:bg-emerald-900 text-white font-bold text-xs py-3 px-4 rounded-xl shadow-sm transition flex items-center justify-center gap-2">
-          <span>📋</span>
-          <span id="copy-btn-text">Copy Custom AI Prompt for "<span id="fallback-btn-term"></span>"</span>
-        </button>
-        <p class="text-[11px] text-stone-400 text-center">Tap to copy a pre-formatted query you can paste into ChatGPT, Gemini, or Claude.</p>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Toast Notification -->
-  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-stone-900 text-white text-xs font-bold px-4 py-3 rounded-full shadow-lg transition opacity-0 pointer-events-none z-50 flex items-center gap-2">
-    <span>✅</span> <span id="toast-msg">Copied prompt to clipboard!</span>
-  </div>
-
-  <script>
-    // --- APP DATA STORE ---
-    const tracks = {
-      colonoscopy: {
-        title: "Post-Colonoscopy Recovery",
-        summary: "So, your colonoscopy prep physically washed out a big chunk of your good gut flora and temporarily stripped your protective mucus lining. Following these recommendations will help restore your gut environment step-by-step—maybe even leaving it more resilient than before.",
-        rules: {
-          1: "On Day 1, choose warm, liquid, or heavily cooked soft foods without seeds, skin, or raw fibers. Avoid dairy and caffeine.",
-          2: "On Day 2, focus on soft fermented foods (unsweetened yogurt/kefir) to re-seed live strains. Avoid hard raw vegetables or tough meats.",
-          3: "On Day 3, reintroduce gentle prebiotic plant fibers (cooked leeks, oats) and easy-to-digest proteins (salmon, poached chicken)."
-        }
-      },
-      antibiotics: {
-        title: "Post-Antibiotics Protocol",
-        summary: "Broad-spectrum antibiotics do a great job clearing infections, but they also wipe out entire colonies of helpful microbes. This guided protocol helps protect your gut from opportunistic yeast, restore species diversity, and feed your recovering microbiome.",
-        rules: {
-          1: "During & immediately after antibiotics, avoid sugary foods and simple carbs that feed opportunistic yeast (Candida). Stick to soothing broths and easy proteins.",
-          2: "Focus on daily live-culture probiotics (unsweetened kefir, plain yogurt, miso) to re-establish beneficial bacterial strains.",
-          3: "Prioritize prebiotic plant diversity. Aim for a wide variety of gentle cooked plant fibers to feed different recovering strains."
-        }
-      },
-      foodbug: {
-        title: "Post-Food Bug / Stomach Reset",
-        summary: "A bout of food poisoning or stomach bug leaves your digestive tract inflamed, hyper-sensitive, and temporarily low on digestive enzymes. This sequence calms acute irritation first before safely reintroducing solid nourishing foods.",
-        rules: {
-          1: "Stick strictly to clear liquids, electrolyte broths, and simple binding starches (white rice congee, dry white toast). Zero raw fat or dairy.",
-          2: "Reintroduce mild cooked foods (applesauce, steamed carrots, plain eggs) and easy probiotic strains to soothe remaining inflammation.",
-          3: "Gradually reintroduce gentle cooked proteins and soluble prebiotic fibers. Keep spices and deep-fried items off the plate for now."
-        }
-      }
-    };
-
-    const foods = [
-      // DAY 1 FOODS
-      {
-        id: "bone-broth",
-        name: "Bone Broth / Mineral Veggie Broth",
-        day: 1,
-        tracks: ["colonoscopy", "antibiotics", "foodbug"],
-        status: "safe",
-        isVeg: true,
-        isVegan: true, // mineral broth variant
-        summary: "Warm, deeply soothing liquid rich in minerals and L-glutamine to repair mucosal lining without requiring active digestion.",
-        geekOut: "Bowel prep or acute diarrhea strips the mucin layer covering enterocytes. Bone/veggie broth supplies bioavailable glycine and L-glutamine, essential substrates used by intestinal epithelial cells for rapid tight-junction repair."
-      },
-      {
-        id: "ripe-banana",
-        name: "Ripe Yellow Banana (Mashed)",
-        day: 1,
-        tracks: ["colonoscopy", "antibiotics", "foodbug"],
-        status: "safe",
-        isVeg: true,
-        isVegan: true,
-        summary: "Easy-to-digest source of potassium and soluble pectin fiber that helps bind liquid stool and calm gut motility.",
-        geekOut: "Fully ripe bananas have converted most insoluble starches into simple glucose and soluble pectin. Pectin forms a gentle gel in the intestinal lumen, absorbing excess water and providing an easily fermented substrate for colonocytes."
-      },
-      {
-        id: "rice-congee",
-        name: "White Rice Congee / Plain Porridge",
-        day: 1,
-        tracks: ["colonoscopy", "antibiotics", "foodbug"],
-        status: "safe",
-        isVeg: true,
-        isVegan: true,
-        summary: "Overcooked white rice boiled in liquid. Extremely low residue, easy on digestive enzymes, and gently filling.",
-        geekOut: "Long-simmered amylose and amylopectin in white rice are gelatinized, minimizing osmotic stress in the small intestine and allowing 99%+ absorption with minimal enzymatic effort."
-      },
-      {
-        id: "scrambled-eggs",
-        name: "Soft Scrambled Eggs",
-        day: 1,
-        tracks: ["colonoscopy", "antibiotics", "foodbug"],
-        status: "safe",
-        isVeg: true,
-        isVegan: false,
-        summary: "High-quality, complete protein that provides essential amino acids without tough muscle fibers or heavy fats.",
-        geekOut: "Egg albumin has a biological value near 100%. Soft cooking denatures proteins for optimal enzymatic cleavage by pancreatic trypsin without burdening a sensitive stomach."
-      },
-      {
-        id: "white-toast",
-        name: "Plain White Toast / Saltines",
-        day: 1,
-        tracks: ["colonoscopy", "antibiotics", "foodbug"],
-        status: "safe",
-        isVeg: true,
-        isVegan: true,
-        summary: "A simple binding starch. Low in fiber so it won't irritate sensitive intestinal walls during early recovery.",
-        geekOut: "Refined white flour has had insoluble bran removed. The remaining starch acts as a bland sponge that absorbs stomach acid and excessive GI secretions."
-      },
-      {
-        id: "flavored-yogurt",
-        name: "Flavored / High-Sugar Yogurt",
-        day: 1,
-        tracks: ["colonoscopy", "antibiotics", "foodbug"],
-        status: "caution",
-        isVeg: true,
-        isVegan: false,
-        summary: "Contains probiotics, but added sugars can cause osmotic diarrhea or feed unwanted yeast strains early on.",
-        geekOut: "Concentrated simple sugars draw water into the intestinal lumen via osmosis, accelerating transit time. Furthermore, temporary lactase enzyme depletion makes dairy sugars riskier on Day 1."
-      },
-      {
-        id: "coffee",
-        name: "Coffee & Caffeinated Teas",
-        day: 1,
-        tracks: ["colonoscopy", "antibiotics", "foodbug"],
-        status: "avoid",
-        isVeg: true,
-        isVegan: true,
-        summary: "Caffeine stimulates peristalsis and gastrocolic reflex, leading to painful spasms or loose stools in an empty gut.",
-        geekOut: "Caffeine stimulates cholecystokinin release and smooth muscle contraction in the distal colon. In an unbuffered gut, chlorogenic acids also hyper-stimulate gastric acid output."
-      },
-      {
-        id: "raw-kale",
-        name: "Raw Kale / Raw Salad Greens",
-        day: 1,
-        tracks: ["colonoscopy", "antibiotics", "foodbug"],
-        status: "avoid",
-        isVeg: true,
-        isVegan: true,
-        summary: "Abrasive, insoluble fiber that requires heavy mechanical digestion and causes painful gas/cramping early on.",
-        geekOut: "Coarse cellulose and lignin in raw brassicas act as an mechanical irritant against fragile enterocytes. Lacking sufficient commensal flora to ferment this fiber, gas buildup causes intestinal distension."
-      },
-
-      // DAY 2 FOODS
-      {
-        id: "unsweetened-kefir",
-        name: "Plain Unsweetened Kefir / Live Yogurt",
-        day: 2,
-        tracks: ["colonoscopy", "antibiotics", "foodbug"],
-        status: "safe",
-        isVeg: true,
-        isVegan: false, // dairy or coconut/oat live culture
-        summary: "Packed with active live probiotic strains (Lactobacillus, Bifidobacteria) to seed your cleared gut environment.",
-        geekOut: "Kefir contains up to 61 distinct bacterial and yeast strains. Fermentation pre-digests lactose into lactic acid, lowering gut pH and creating an inhospitable environment for pathogens."
-      },
-      {
-        id: "sourdough-bread",
-        name: "Traditional Sourdough Bread",
-        day: 2,
-        tracks: ["colonoscopy", "antibiotics", "foodbug"],
-        status: "safe",
-        isVeg: true,
-        isVegan: true,
-        summary: "Wild yeast fermentation pre-digests gluten and phytic acid, making sourdough far easier to tolerate than regular bread.",
-        geekOut: "Lactobacilli in sourdough sourdough starters degrade fructans and gluten peptides during long fermentation, reducing gas production and fermentable oligo-saccharides (FODMAPs)."
-      },
-      {
-        id: "steamed-carrots",
-        name: "Steamed Carrots & Zucchini (Peeled)",
-        day: 2,
-        tracks: ["colonoscopy", "antibiotics", "foodbug"],
-        status: "safe",
-        isVeg: true,
-        isVegan: true,
-        summary: "Soft, cooked soluble fibers that nourish gut lining without the rough insoluble edges of raw vegetables.",
-        geekOut: "Thermal cooking breaks down tough cell walls and converts insoluble pectins into soft, fermentable soluble fiber that feeds short-chain fatty acid (SCFA) producing microbes."
-      },
-      {
-        id: "miso-soup",
-        name: "Mild Miso Soup with Silken Tofu",
-        day: 2,
-        tracks: ["colonoscopy", "antibiotics", "foodbug"],
-        status: "safe",
-        isVeg: true,
-        isVegan: true,
-        summary: "Fermented soybean paste provides gentle bioavailable probiotics alongside electrolytes and easy plant protein.",
-        geekOut: "Aspergillus oryzae fermentation breaks soy proteins down into free amino acids and peptides while introducing beneficial fermented enzymes to support gastric ease."
-      },
-      {
-        id: "aged-cheese",
-        name: "Aged Parmesan / Sharp Cheddar",
-        day: 2,
-        tracks: ["colonoscopy", "antibiotics", "foodbug"],
-        status: "caution",
-        isVeg: true,
-        isVegan: false,
-        summary: "Aging removes 99%+ of lactose, making small amounts tolerable, but high fat can still slow stomach emptying.",
-        geekOut: "Long-aged hard cheeses undergo lactic acid fermentation where lactose is consumed by bacteria. However, concentrated lipids require pancreatic lipase, which can feel heavy if consumed in high volume."
-      },
-
-      // DAY 3 FOODS
-      {
-        id: "greenish-banana",
-        name: "Greenish / Slightly Unripe Banana",
-        day: 3,
-        tracks: ["colonoscopy", "antibiotics", "foodbug"],
-        status: "safe",
-        isVeg: true,
-        isVegan: true,
-        summary: "Packed with Type-2 Resistant Starch (RS2) that bypasses the stomach to directly feed good colon bacteria.",
-        geekOut: "Unripe bananas contain RS2 starch molecules resistant to enzymatic breakdown in the small intestine. They reach the cecum intact, where microbes ferment them into butyrate—the primary energy source for colonocytes."
-      },
-      {
-        id: "poached-chicken",
-        name: "Poached Chicken Breast",
-        day: 3,
-        tracks: ["colonoscopy", "antibiotics", "foodbug"],
-        status: "safe",
-        isVeg: false,
-        isVegan: false,
-        summary: "Lean, clean animal protein cooked moist to provide structural building blocks as gut motility fully normalizes.",
-        geekOut: "Moist heat cooking (poaching) prevents protein cross-linking caused by high-temperature searing, keeping collagen and muscle fibers tender for rapid stomach transit."
-      },
-      {
-        id: "baked-salmon",
-        name: "Wild Baked Salmon",
-        day: 3,
-        tracks: ["colonoscopy", "antibiotics", "foodbug"],
-        status: "safe",
-        isVeg: false,
-        isVegan: false,
-        summary: "Rich in Omega-3 fatty acids (EPA/DHA) that actively reduce gut mucosal inflammation during late recovery.",
-        geekOut: "Omega-3 polyunsaturated fatty acids integrate into intestinal cell membranes, giving rise to anti-inflammatory resolvins and protectins that promote mucosal healing."
-      },
-      {
-        id: "rolled-oats",
-        name: "Cooked Rolled Oats with Chia",
-        day: 3,
-        tracks: ["colonoscopy", "antibiotics", "foodbug"],
-        status: "safe",
-        isVeg: true,
-        isVegan: true,
-        summary: "Excellent source of Beta-Glucan soluble fiber, forming a protective gel that lowers cholesterol and feeds Bifidobacteria.",
-        geekOut: "Beta-glucan is a viscous fermentable fiber that increases stool bulk softly while selectively expanding populations of beneficial Bifidobacteria and Akkermansia muciniphila."
-      },
-      {
-        id: "cooked-leeks",
-        name: "Steamed Leeks & Asparagus",
-        day: 3,
-        tracks: ["colonoscopy", "antibiotics", "foodbug"],
-        status: "safe",
-        isVeg: true,
-        isVegan: true,
-        summary: "Rich in natural inulin and fructo-oligosaccharides (FOS)—the top prebiotic foods for colonizing beneficial species.",
-        geekOut: "Inulin-type fructans are non-digestible oligosaccharides with a low degree of polymerization. They selectively stimulate the growth and metabolic activity of health-promoting gut microbiota."
-      },
-      {
-        id: "whole-seeded-bread",
-        name: "Whole Wheat / Heavy Seeded Bread",
-        day: 3,
-        tracks: ["colonoscopy", "antibiotics", "foodbug"],
-        status: "caution",
-        isVeg: true,
-        isVegan: true,
-        summary: "Reintroduce slowly. Dense seeds and high insoluble bran can cause mild bloating if reintroduced too fast.",
-        geekOut: "Insoluble wheat bran increases bowel transit time via mechanical distension. If gut flora volume is still recovering, rapid fermentation can lead to temporary entrapment of gas."
-      },
-      {
-        id: "kimchi",
-        name: "Spicy Kimchi / Sauerkraut",
-        day: 3,
-        tracks: ["colonoscopy", "antibiotics", "foodbug"],
-        status: "caution",
-        isVeg: true,
-        isVegan: true,
-        summary: "Great probiotics, but capsaicin and heavy spices can irritate a newly healed mucosal lining if eaten in large portions.",
-        geekOut: "Capsaicin activates TRPV1 receptors in the gut lining, inducing hyper-motility and sensation of warmth/cramping. Introduce in 1-teaspoon sample portions first."
-      }
-    ];
-
-    // --- APP STATE ---
-    let state = {
-      track: 'colonoscopy',
-      day: 1,
-      search: '',
-      diet: 'all',
-      status: 'all'
-    };
-
-    // --- CONTROLLERS ---
-    function setTrack(trackKey) {
-      state.track = trackKey;
-      document.querySelectorAll('.track-btn').forEach(btn => {
-        btn.classList.remove('bg-brand-sage', 'text-white', 'border-brand-sage', 'shadow-sm');
-        btn.classList.add('bg-white', 'text-stone-700', 'border-stone-200');
-      });
-      const activeBtn = document.getElementById(`btn-${trackKey}`);
-      activeBtn.classList.remove('bg-white', 'text-stone-700', 'border-stone-200');
-      activeBtn.classList.add('bg-brand-sage', 'text-white', 'border-brand-sage', 'shadow-sm');
-      
-      renderIntro();
-      render();
-    }
-
-    function setDay(dayNum) {
-      state.day = dayNum;
-      document.querySelectorAll('.day-tab').forEach(tab => {
-        tab.classList.remove('bg-brand-sage', 'text-white', 'border-brand-sage');
-        tab.classList.add('bg-white', 'text-stone-700', 'border-stone-200');
-      });
-      const activeTab = document.getElementById(`day-tab-${dayNum}`);
-      activeTab.classList.remove('bg-white', 'text-stone-700', 'border-stone-200');
-      activeTab.classList.add('bg-brand-sage', 'text-white', 'border-brand-sage');
-      
-      render();
-    }
-
-    function handleSearch(query) {
-      state.search = query.trim().toLowerCase();
-      const clearBtn = document.getElementById('clear-search-btn');
-      const searchBanner = document.getElementById('search-mode-banner');
-      const dayTabsContainer = document.getElementById('day-tabs-container');
-      const searchQueryDisplay = document.getElementById('search-query-display');
-
-      if (state.search.length > 0) {
-        clearBtn.classList.remove('hidden');
-        searchBanner.classList.remove('hidden');
-        dayTabsContainer.classList.add('opacity-40', 'pointer-events-none');
-        searchQueryDisplay.innerText = state.search;
-      } else {
-        clearBtn.classList.add('hidden');
-        searchBanner.classList.add('hidden');
-        dayTabsContainer.classList.remove('opacity-40', 'pointer-events-none');
-      }
-
-      render();
-    }
-
-    function clearSearch() {
-      document.getElementById('search-input').value = '';
-      handleSearch('');
-    }
-
-    function setDiet(dietType) {
-      state.diet = dietType;
-      document.querySelectorAll('.diet-chip').forEach(c => {
-        c.classList.remove('bg-stone-800', 'text-white');
-        c.classList.add('bg-stone-100', 'text-stone-600');
-      });
-      document.getElementById(`diet-${dietType}`).classList.remove('bg-stone-100', 'text-stone-600');
-      document.getElementById(`diet-${dietType}`).classList.add('bg-stone-800', 'text-white');
-      render();
-    }
-
-    function setStatus(statusType) {
-      state.status = statusType;
-      document.querySelectorAll('.status-chip').forEach(c => {
-        c.classList.remove('bg-stone-800', 'text-white');
-        if (c.id === 'status-safe') c.classList.add('bg-emerald-100', 'text-emerald-800');
-        else if (c.id === 'status-caution') c.classList.add('bg-amber-100', 'text-amber-800');
-        else if (c.id === 'status-avoid') c.classList.add('bg-red-100', 'text-red-800');
-        else c.classList.add('bg-stone-100', 'text-stone-600');
-      });
-      const active = document.getElementById(`status-${statusType}`);
-      active.classList.remove('bg-emerald-100', 'bg-amber-100', 'bg-red-100', 'bg-stone-100', 'text-emerald-800', 'text-amber-800', 'text-red-800', 'text-stone-600');
-      active.classList.add('bg-stone-800', 'text-white');
-      render();
-    }
-
-    function toggleGeekOut(foodId) {
-      const panel = document.getElementById(`geek-${foodId}`);
-      const btn = document.getElementById(`geek-btn-${foodId}`);
-      if (panel.classList.contains('hidden')) {
-        panel.classList.remove('hidden');
-        btn.innerText = 'Hide Science 🧪';
-      } else {
-        panel.classList.add('hidden');
-        btn.innerText = 'Geek Out 🧪';
-      }
-    }
-
-    function copyAIPrompt() {
-      const trackObj = tracks[state.track];
-      const promptText = `I am currently on Day ${state.day} of recovery following a ${trackObj.title}. Is it safe to eat "${state.search}" right now? Please provide: 1) Safety status (Safe, Caution, or Avoid), 2) Digestive impact on my gut mucosal lining and microbiota, and 3) A safer preparation method or alternative if applicable.`;
-      
-      navigator.clipboard.writeText(promptText).then(() => {
-        showToast(`Copied AI prompt for "${state.search}"!`);
-      }).catch(err => {
-        showToast("Copied prompt to clipboard!");
-      });
-    }
-
-    function showToast(msg) {
-      const toast = document.getElementById('toast');
-      document.getElementById('toast-msg').innerText = msg;
-      toast.classList.remove('opacity-0', 'pointer-events-none');
-      setTimeout(() => {
-        toast.classList.add('opacity-0', 'pointer-events-none');
-      }, 3000);
-    }
-
-    // --- RENDER FUNCTIONS ---
-    function renderIntro() {
-      const trackObj = tracks[state.track];
-      document.getElementById('intro-banner').innerHTML = `
-        <div class="flex items-center justify-between border-b border-stone-100 pb-2">
-          <h2 class="font-bold text-stone-800 text-sm flex items-center gap-2">
-            <span>${trackObj.title}</span>
-          </h2>
-          <span class="text-[10px] font-bold uppercase tracking-wider text-stone-400">Overview</span>
-        </div>
-        <p class="text-xs text-stone-600 leading-relaxed font-medium pt-1">
-          ${trackObj.summary}
-        </p>
-      `;
-    }
-
-    function render() {
-      const foodList = document.getElementById('food-list');
-      const fallbackCard = document.getElementById('fallback-card');
-
-      // Filter Logic
-      const isGlobalSearch = state.search.length > 0;
-
-      const filtered = foods.filter(item => {
-        // Track Filter
-        const matchesTrack = item.tracks.includes(state.track);
-
-        // Day Filter (Bypassed during global search)
-        const matchesDay = isGlobalSearch ? true : (item.day === state.day);
-
-        // Search Filter
-        const matchesSearch = !isGlobalSearch || 
-          item.name.toLowerCase().includes(state.search) || 
-          item.summary.toLowerCase().includes(state.search) ||
-          item.geekOut.toLowerCase().includes(state.search);
-
-        // Diet Filter
-        let matchesDiet = true;
-        if (state.diet === 'veg') matchesDiet = item.isVeg;
-        if (state.diet === 'vegan') matchesDiet = item.isVegan;
-
-        // Status Filter
-        let matchesStatus = true;
-        if (state.status !== 'all') matchesStatus = item.status === state.status;
-
-        return matchesTrack && matchesDay && matchesSearch && matchesDiet && matchesStatus;
-      });
-
-      // Render Cards or Fallback
-      if (filtered.length === 0 && isGlobalSearch) {
-        foodList.innerHTML = '';
-        fallbackCard.classList.remove('hidden');
-        document.getElementById('fallback-term').innerText = state.search;
-        document.getElementById('fallback-btn-term').innerText = state.search;
-        
-        // Show phase-specific rule
-        const ruleText = tracks[state.track].rules[state.day];
-        document.getElementById('fallback-rule').innerText = ruleText;
-
-      } else {
-        fallbackCard.classList.add('hidden');
-
-        if (filtered.length === 0) {
-          foodList.innerHTML = `
-            <div class="bg-white p-8 rounded-2xl border border-stone-200 text-center space-y-2">
-              <span class="text-3xl">🥗</span>
-              <p class="font-bold text-stone-700 text-sm">No items match your selected filters.</p>
-              <p class="text-xs text-stone-400">Try switching your diet or status chips above.</p>
-            </div>
-          `;
-          return;
-        }
-
-        foodList.innerHTML = filtered.map(item => {
-          // Status Badge Config
-          let badgeClass = "bg-emerald-100 text-emerald-800 border-emerald-200";
-          let badgeText = "Recommended ✅";
-          if (item.status === 'caution') {
-            badgeClass = "bg-amber-100 text-amber-800 border-amber-200";
-            badgeText = "Proceed with Caution ⚠️";
-          } else if (item.status === 'avoid') {
-            badgeClass = "bg-red-100 text-red-800 border-red-200";
-            badgeText = "Avoid for Now ⛔";
-          }
-
-          return `
-            <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-sm space-y-3 transition hover:border-stone-300">
-              <div class="flex items-start justify-between gap-2">
-                <div class="space-y-1">
-                  <div class="flex items-center gap-2">
-                    <h3 class="font-bold text-stone-800 text-sm">${item.name}</h3>
-                    ${isGlobalSearch ? `<span class="bg-stone-100 text-stone-600 font-bold text-[10px] px-2 py-0.5 rounded-md border border-stone-200">Day ${item.day}</span>` : ''}
-                  </div>
-                  <div class="flex items-center gap-1.5 text-[10px]">
-                    ${item.isVeg ? `<span class="bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded font-bold">Vegetarian</span>` : ''}
-                    ${item.isVegan ? `<span class="bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded font-bold">Vegan</span>` : ''}
-                  </div>
+    <!-- Header & Brand Bar -->
+    <header class="bg-white border-b border-oat-dark shadow-sm sticky top-0 z-50">
+        <div class="max-w-3xl mx-auto px-4 py-3 sm:px-6 flex items-center justify-between">
+            <div class="flex items-center space-x-2.5">
+                <div class="w-10 h-10 rounded-2xl bg-sage-500 text-white flex items-center justify-center font-extrabold text-xl shadow-md shadow-sage-500/20">
+                    🦠
                 </div>
-                <span class="text-[11px] font-bold px-2.5 py-1 rounded-full border ${badgeClass} shrink-0">
-                  ${badgeText}
-                </span>
-              </div>
-
-              <p class="text-xs text-stone-600 leading-relaxed">
-                ${item.summary}
-              </p>
-
-              <!-- Geek Out Toggle & Collapsible Science -->
-              <div class="pt-2 border-t border-stone-100 flex flex-col gap-2">
-                <button 
-                  id="geek-btn-${item.id}"
-                  onclick="toggleGeekOut('${item.id}')" 
-                  class="self-start text-[11px] font-bold text-brand-sage hover:text-emerald-900 transition flex items-center gap-1"
-                >
-                  Geek Out 🧪
+                <div>
+                    <h1 class="text-xl font-extrabold text-stone-900 tracking-tight leading-none">
+                        Re-Poopulate
+                    </h1>
+                    <p class="text-xs font-semibold text-sage-500 mt-0.5">
+                        Guided help to rebuild your gut biome.
+                    </p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-2">
+                <button onclick="togglePwaModal()" class="text-xs font-semibold text-sage-800 bg-sage-50 hover:bg-sage-100 border border-sage-200 px-3 py-1.5 rounded-full transition-colors flex items-center gap-1">
+                    <span>📲</span>
+                    <span class="hidden sm:inline">Add to Phone</span>
                 </button>
-
-                <div id="geek-${item.id}" class="hidden bg-stone-50 p-3 rounded-xl border border-stone-200 text-xs text-stone-600 space-y-1">
-                  <span class="font-bold text-stone-800 text-[10px] uppercase tracking-wider block">Microbial & Enzymatic Impact</span>
-                  <p class="leading-relaxed font-mono text-[11px]">
-                    ${item.geekOut}
-                  </p>
-                </div>
-              </div>
+                <a href="#disclaimer" class="text-xs font-medium text-stone-500 hover:text-stone-800 bg-oat px-2.5 py-1.5 rounded-full transition-colors">
+                    Discharge Note
+                </a>
             </div>
-          `;
-        }).join('');
-      }
-    }
+        </div>
+    </header>
 
-    // --- INITIALIZATION ---
-    window.addEventListener('DOMContentLoaded', () => {
-      renderIntro();
-      render();
-    });
-  </script>
+    <!-- Subdeck Subtitle Banner -->
+    <section class="bg-oat/60 border-b border-oat-dark/50 py-3.5 px-4 text-center">
+        <p class="max-w-2xl mx-auto text-xs sm:text-sm text-stone-600 font-medium leading-relaxed">
+            “The practical guide on what to eat to rebuild a healthy gut biome after a <strong class="text-stone-900">colonoscopy</strong>, <strong class="text-stone-900">antibiotics</strong>, or <strong class="text-stone-900">food poisoning</strong>.”
+        </p>
+    </section>
+
+    <!-- Main App Container -->
+    <main class="flex-1 max-w-3xl w-full mx-auto px-4 py-6 sm:px-6 space-y-6">
+
+        <!-- Track Selector (Colonoscopy / Antibiotics / Food Poisoning) -->
+        <div class="space-y-3">
+            <label class="block text-xs font-bold uppercase tracking-wider text-stone-500">
+                1. Select Your Recovery Track
+            </label>
+            <div class="grid grid-cols-3 gap-2 p-1.5 bg-oat/70 rounded-2xl border border-oat-dark/60">
+                <button onclick="setTrack('colonoscopy')" id="btn-colonoscopy" class="track-btn py-2.5 px-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-center flex flex-col sm:flex-row items-center justify-center gap-1.5 shadow-sm bg-white text-sage-800 border border-stone-200">
+                    <span>🏥</span>
+                    <span class="truncate">Colonoscopy</span>
+                </button>
+                <button onclick="setTrack('antibiotics')" id="btn-antibiotics" class="track-btn py-2.5 px-2 rounded-xl text-xs sm:text-sm font-medium text-stone-600 transition-all text-center flex flex-col sm:flex-row items-center justify-center gap-1.5 hover:text-stone-900">
+                    <span>💊</span>
+                    <span class="truncate">Antibiotics</span>
+                </button>
+                <button onclick="setTrack('poisoning')" id="btn-poisoning" class="track-btn py-2.5 px-2 rounded-xl text-xs sm:text-sm font-medium text-stone-600 transition-all text-center flex flex-col sm:flex-row items-center justify-center gap-1.5 hover:text-stone-900">
+                    <span>🤢</span>
+                    <span class="truncate">Food Bug</span>
+                </button>
+            </div>
+
+            <!-- Track Intro Summary Banner -->
+            <div id="track-summary-card" class="bg-sage-50/80 border border-sage-200/80 p-4 rounded-2xl flex items-start space-x-3 shadow-sm">
+                <div class="text-xl shrink-0">💡</div>
+                <p id="track-summary-text" class="text-xs sm:text-sm text-stone-700 font-medium leading-relaxed">
+                    Loading overview...
+                </p>
+            </div>
+        </div>
+
+        <!-- Phase Timeline Selector -->
+        <div class="space-y-2">
+            <div class="flex justify-between items-center">
+                <label class="block text-xs font-bold uppercase tracking-wider text-stone-500">
+                    2. Choose Recovery Phase
+                </label>
+                <span id="phase-timeframe" class="text-xs font-semibold text-sage-600 bg-sage-50 px-2.5 py-0.5 rounded-full border border-sage-100">
+                    Day 1 Focus
+                </span>
+            </div>
+            <div id="phase-buttons" class="flex space-x-2 overflow-x-auto pb-1 custom-scrollbar">
+                <!-- Dynamically populated phase buttons -->
+            </div>
+        </div>
+
+        <!-- Current Phase Context Banner -->
+        <div id="phase-context-card" class="bg-white p-4 rounded-2xl border border-oat-dark/60 shadow-sm flex items-start space-x-3.5">
+            <div class="text-2xl p-2 bg-sage-50 rounded-xl text-sage-600 shrink-0">
+                🌱
+            </div>
+            <div class="flex-1 space-y-1">
+                <h3 id="phase-title" class="font-bold text-stone-900 text-sm sm:text-base">
+                    Phase Title Loading...
+                </h3>
+                <p id="phase-description" class="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                    Phase description loading...
+                </p>
+            </div>
+        </div>
+
+        <!-- Search & Filter Controls -->
+        <div class="space-y-3">
+            <div class="relative">
+                <input type="text" id="food-search" oninput="renderFoods()" placeholder="Search food (e.g. Pasta, Ice Cream, Apples, Lentils, Tomatoes, Broth)..." 
+                    class="w-full pl-10 pr-4 py-3 bg-white border border-stone-200 rounded-2xl text-sm placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-sage-500 focus:border-transparent shadow-sm">
+                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400">
+                    🔍
+                </div>
+            </div>
+
+            <!-- Dietary Preference Filter Bar -->
+            <div class="flex items-center space-x-2 bg-oat/50 p-1.5 rounded-2xl border border-oat-dark/40 text-xs">
+                <span class="font-bold text-stone-500 pl-2 hidden sm:inline">Diet:</span>
+                <button onclick="setDiet('all')" id="diet-all" class="diet-btn flex-1 py-1.5 px-2 rounded-xl font-bold transition-all text-center bg-stone-900 text-white shadow-sm">All Diets</button>
+                <button onclick="setDiet('veg')" id="diet-veg" class="diet-btn flex-1 py-1.5 px-2 rounded-xl font-medium text-stone-600 hover:text-stone-900 transition-all text-center">🌱 Vegetarian</button>
+                <button onclick="setDiet('vegan')" id="diet-vegan" class="diet-btn flex-1 py-1.5 px-2 rounded-xl font-medium text-stone-600 hover:text-stone-900 transition-all text-center">🌿 Vegan</button>
+            </div>
+
+            <!-- Filter Chips -->
+            <div id="filter-chips" class="flex space-x-2 overflow-x-auto pb-1 custom-scrollbar text-xs">
+                <button onclick="setFilter('all')" class="filter-chip px-3 py-1.5 rounded-full font-semibold transition-colors bg-stone-900 text-white">All Foods</button>
+                <button onclick="setFilter('Recommended')" class="filter-chip px-3 py-1.5 rounded-full font-medium text-stone-600 bg-white border border-stone-200 hover:bg-stone-50">Safe / Recommended</button>
+                <button onclick="setFilter('Caution')" class="filter-chip px-3 py-1.5 rounded-full font-medium text-stone-600 bg-white border border-stone-200 hover:bg-stone-50">Caution</button>
+                <button onclick="setFilter('Avoid')" class="filter-chip px-3 py-1.5 rounded-full font-medium text-stone-600 bg-white border border-stone-200 hover:bg-stone-50">Avoid</button>
+            </div>
+        </div>
+
+        <!-- Food Recommendation Cards Grid -->
+        <div id="food-grid" class="space-y-3">
+            <!-- Dynamic Food Cards -->
+        </div>
+
+    </main>
+
+    <!-- PWA Installation Instructions Modal -->
+    <div id="pwa-modal" class="hidden fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 space-y-4 shadow-xl border border-stone-100">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <span class="text-2xl">📲</span>
+                    <h3 class="font-extrabold text-stone-900 text-lg">Add to Home Screen</h3>
+                </div>
+                <button onclick="togglePwaModal()" class="text-stone-400 hover:text-stone-600 font-bold text-lg p-1">✕</button>
+            </div>
+            
+            <p class="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                Install <strong>Re-Poopulate</strong> on your smartphone to access it like a downloaded app, complete with offline support!
+            </p>
+
+            <div class="space-y-3 text-xs bg-oat/50 p-3.5 rounded-2xl border border-oat-dark/50">
+                <div>
+                    <strong class="text-stone-900 block font-bold mb-0.5">🍏 On iPhone (Safari):</strong>
+                    <p class="text-stone-600">Tap the <span class="font-bold text-sage-600">Share button</span> (bottom center) $\rightarrow$ scroll and tap <span class="font-bold text-stone-800">"Add to Home Screen"</span>.</p>
+                </div>
+                <div class="pt-2 border-t border-oat-dark/40">
+                    <strong class="text-stone-900 block font-bold mb-0.5">🤖 On Android (Chrome):</strong>
+                    <p class="text-stone-600">Tap the <span class="font-bold text-sage-600">Three Dots menu</span> (top right) $\rightarrow$ tap <span class="font-bold text-stone-800">"Install App"</span> or <span class="font-bold text-stone-800">"Add to Home Screen"</span>.</p>
+                </div>
+            </div>
+
+            <button onclick="togglePwaModal()" class="w-full py-3 bg-sage-500 hover:bg-sage-600 text-white font-bold rounded-2xl text-sm transition-colors shadow-md shadow-sage-500/20">
+                Got it!
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer Discharge Disclaimer -->
+    <footer id="disclaimer" class="mt-auto bg-oat/50 border-t border-oat-dark py-6 px-4">
+        <div class="max-w-3xl mx-auto space-y-2 text-center">
+            <p class="text-xs text-stone-500 leading-relaxed max-w-xl mx-auto">
+                <strong>Discharge Notice:</strong> Re-Poopulate provides practical food suggestions for gentle digestion and microbiome support. Always follow your physician or gastroenterologist's specific discharge instructions.
+            </p>
+            <p class="text-[10px] text-stone-400 font-medium">
+                © Re-Poopulate Platform • getrepoopulate.com
+            </p>
+        </div>
+    </footer>
+
+    <!-- Application Logic Script -->
+    <script>
+        // Datasets for the three tracks
+        const TRACKS = {
+            colonoscopy: {
+                name: "Post-Colonoscopy",
+                subtitle: "3-Day Mucosal & Flora Reset",
+                summary: "Bowel prep physically flushes out mucus, digestive enzymes, and luminal bacteria. However, deep crypt microbes remain intact. Your lining regenerates rapidly, so a targeted 3-day protocol restores normal digestion.",
+                phases: [
+                    {
+                        id: "d1",
+                        label: "Day 1: Soothe & Hydrate",
+                        timeframe: "Hours 0 – 24",
+                        title: "Protect the Mucosal Barrier",
+                        description: "Your gut prep physically washed out mucus and enzymes. Focus on warm liquids, gentle electrolytes, and easy-to-absorb starch and protein.",
+                        foods: [
+                            {
+                                name: "Plain White Pasta (or Noodles in Broth)",
+                                category: "Grains & Carbs",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Soft, plain white pasta provides easy binding energy without irritating tender gut walls.",
+                                science: "Refined wheat starch has had insoluble bran removed, yielding low-residue gelatinized starch that requires minimal digestive breakdown."
+                            },
+                            {
+                                name: "Warm Bone Broth",
+                                category: "Soups",
+                                rating: "Recommended",
+                                vegetarian: false,
+                                vegan: false,
+                                summary: "Warm bone broth coats your sensitive stomach and helps it heal gently.",
+                                science: "Rich in amino acids like L-glutamine and glycine, which act as substrates to rebuild damaged mucosal lining cells (enterocytes) without triggering heavy digestion."
+                            },
+                            {
+                                name: "Warm Mineral Veggie Broth",
+                                category: "Soups & Broths",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Soothing plant-based broth rich in bioavailable minerals, potassium, and easy electrolytes.",
+                                science: "Gentle liquid extraction delivers key electrolytes (potassium, magnesium) and soluble glutamine without fat or fiber, ensuring zero GI mechanical stress."
+                            },
+                            {
+                                name: "White Rice Congee or Porridge",
+                                category: "Grains & Carbs",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Soft, well-cooked white rice is ultra-gentle and restores basic energy.",
+                                science: "Extended boiling gelatinizes amylose starches, making them rapidly absorbable with minimal pancreatic enzyme output."
+                            },
+                            {
+                                name: "White Toast / Plain Soda Crackers",
+                                category: "Grains",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Simple white toast or crackers provide easy binding energy without rough bran fiber.",
+                                science: "Refined flour has stripped insoluble bran, leaving low-residue starch that passes easily without mechanical friction on tender villi."
+                            },
+                            {
+                                name: "Scrambled Eggs",
+                                category: "Protein",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: false,
+                                summary: "Soft, highly bioavailable protein that is exceptionally gentle on your recovering digestive tract.",
+                                science: "Eggs have a high biological value (HBV) and near-zero insoluble fiber content, allowing maximum nutrient absorption with minimal mechanical effort."
+                            },
+                            {
+                                name: "Silken Tofu in Warm Rice Broth",
+                                category: "Plant Protein",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Ultra-soft, delicate plant protein that glides over tender gut lining.",
+                                science: "Silken soy protein has undergone coagulation, removing tough fibers. Its soft structure requires virtually zero mechanical digestion in the stomach."
+                            },
+                            {
+                                name: "Ripe Yellow Banana (Mashed)",
+                                category: "Produce",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Soft ripe banana supplies easy potassium and gentle, soothing fruit pectin.",
+                                science: "As bananas ripen, resistant starches convert into simple glucose and fructose, making them easy to digest on Day 1 while supplying electrolyte potassium."
+                            },
+                            {
+                                name: "Applesauce (Unsweetened / Stewed)",
+                                category: "Produce",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Warm or smooth applesauce delivers soothing soluble pectin without tough fruit skins.",
+                                science: "Cooking apples breaks down structural plant walls, releasing soluble pectin that forms a gelatinous protective layer over mucosal tissue."
+                            },
+                            {
+                                name: "Raw Whole Apples (with skin)",
+                                category: "Produce",
+                                rating: "Avoid",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Avoid raw apple skins today. Heavy insoluble cellulose acts like sandpaper on a freshly prepped gut.",
+                                science: "Uncooked apple skin consists of dense insoluble cellulose and cutin polymers that cause mechanical friction against un-mucinized intestinal villi."
+                            },
+                            {
+                                name: "Ice Cream & Heavy Frozen Desserts",
+                                category: "Dairy & Sweets",
+                                rating: "Avoid",
+                                vegetarian: true,
+                                vegan: false,
+                                summary: "Avoid ice cream today. High saturated fats, cold temperatures, and unfermented lactose can trigger rapid cramping.",
+                                science: "Cold lipid loads stimulate rapid cholecystokinin (CCK) release, accelerating gastric emptying and gastrocolic reflexes in a clean, sedated bowel."
+                            },
+                            {
+                                name: "Cooked Lentils & Dal",
+                                category: "Legumes",
+                                rating: "Avoid",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Save lentils for Day 3. High galacto-oligosaccharides cause sudden gas when resident bacteria are low.",
+                                science: "Lentils contain galacto-oligosaccharides (GOS) that undergo rapid, erratic fermentation in a clean bowel, leading to painful distension."
+                            },
+                            {
+                                name: "Raw Tomatoes & Heavy Marinara",
+                                category: "Produce / Acidic",
+                                rating: "Avoid",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Avoid acidic raw tomatoes or heavy marinara today to protect your sensitive stomach lining.",
+                                science: "High concentrations of citric and malic acids combined with raw tomato skin seeds chemically irritate sensitive gastric and intestinal mucosal tissue."
+                            },
+                            {
+                                name: "Flavored / Sugary Yogurt",
+                                category: "Dairy",
+                                rating: "Caution",
+                                vegetarian: true,
+                                vegan: false,
+                                summary: "Watch out for high added sugar. Added sweeteners can feed opportunistic bacteria and cause gas.",
+                                science: "High simple sugar concentrations increase luminal osmotic pressure, drawing water into the intestine and accelerating transit time."
+                            },
+                            {
+                                name: "Plain Greek Yogurt or Kefir",
+                                category: "Dairy & Probiotics",
+                                rating: "Caution",
+                                vegetarian: true,
+                                vegan: false,
+                                summary: "Proceed carefully; bowel prep causes a temporary 'lactase wash-out' that makes dairy hard to break down today.",
+                                science: "Prep strips brush-border lactase enzymes. While yogurt contains beneficial live strains, unfermented lactose can cause acute gas and bloating."
+                            },
+                            {
+                                name: "Coffee & Caffeinated Teas",
+                                category: "Beverages",
+                                rating: "Avoid",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Hold off on caffeine today. It stimulates sudden gut contractions and stomach acid.",
+                                science: "Caffeine stimulates gastrin release and colon hyper-motility, which can trigger painful spasms in a clean, sedated digestive tract."
+                            },
+                            {
+                                name: "Whole Wheat / Seeded Bread",
+                                category: "Grains",
+                                rating: "Avoid",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Save whole grains for Day 3. Sharp seeds and coarse bran scrape sensitive mucosal lining today.",
+                                science: "Insoluble wheat bran cellulose acts as a mechanical abrasive on un-mucinized epithelial tissue, provoking cramping."
+                            }
+                        ]
+                    },
+                    {
+                        id: "d2",
+                        label: "Day 2: Seed the Microbes",
+                        timeframe: "Hours 24 – 48",
+                        title: "Reintroduce Live Flora",
+                        description: "Your lining is stabilizing. Start seeding live bacterial cultures into your clean slate with gentle fermented foods and mild starches.",
+                        foods: [
+                            {
+                                name: "Plain Pasta with Olive Oil or Light Broth",
+                                category: "Grains",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Easy energy starch paired with healthy olive oil to soothe the digestive tract.",
+                                science: "Monounsaturated fats in olive oil stimulate mild, healthy bile flow without triggering hyper-motility."
+                            },
+                            {
+                                name: "Plain Unsweetened Greek Yogurt or Kefir",
+                                category: "Dairy & Probiotics",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: false,
+                                summary: "Enzymes have stabilized! Live active strains now help seed your clean gut microbiome.",
+                                science: "Cultured dairy introduces live strains that produce lactic acid, creating an acidic pH hostile to opportunistic pathogens."
+                            },
+                            {
+                                name: "Cooked Mild Tomatoes / Light Sauce",
+                                category: "Produce",
+                                rating: "Caution",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Cooked tomato in small portions is gentle, but avoid heavy acidic marinara sauce.",
+                                science: "Thermal processing degrades raw plant cellular structures and softens acidity, making lycopene antioxidants accessible without harsh mucosal sting."
+                            },
+                            {
+                                name: "Unsweetened Oat/Coconut Kefir",
+                                category: "Plant Probiotics",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Plant-based fermented probiotics seed friendly flora without any lactose risk.",
+                                science: "Delivers active transient strains (L. acidophilus, B. bifidum) in a plant-milk matrix, helping re-establish acidic luminal pH to deter pathogens."
+                            },
+                            {
+                                name: "Sourdough Bread (Toasted)",
+                                category: "Grains",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Wild fermentation pre-digests gluten and starches, making sourdough easier to digest.",
+                                science: "Lactic acid bacteria in traditional sourdough wild fermentation degrade phytic acid and partially hydrolyze gluten proteins."
+                            },
+                            {
+                                name: "Steamed Carrots & Zucchini",
+                                category: "Produce",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Soft, peeled, cooked veggies supply gentle pectin fuel for early bacterial colonies.",
+                                science: "Cooking degrades tough pectin matrices into soft soluble fibers that nascent commensal bacteria easily ferment into protective SCFAs."
+                            },
+                            {
+                                name: "Lentils (Cooked Well / Pureed Soup)",
+                                category: "Legumes",
+                                rating: "Caution",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Start with a small spoonful of well-cooked red lentil soup to test fiber tolerance.",
+                                science: "Pureeing or thorough cooking breaks down mechanical legume skins, reducing mechanical load while delivering early oligosaccharide prebiotic fuel."
+                            },
+                            {
+                                name: "Ice Cream (Dairy-Free or Low-Sugar)",
+                                category: "Sweets",
+                                rating: "Caution",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "If craving something cold, opt for a small portion of low-sugar or coconut-milk ice cream.",
+                                science: "Plant-based milk matrices avoid lactose osmotic pressure, though high fat content still requires moderate biliary digestion."
+                            },
+                            {
+                                name: "Raw Whole Apple (Peeled)",
+                                category: "Produce",
+                                rating: "Caution",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Chew peeled raw apple slices thoroughly. Peeling removes insoluble skin fiber.",
+                                science: "Removing apple skins strips the harsh insoluble cellulose while retaining soluble pectin and bioavailable polyphenol antioxidants."
+                            }
+                        ]
+                    },
+                    {
+                        id: "d3",
+                        label: "Day 3: Feed & Diversify",
+                        timeframe: "Hours 48 – 72",
+                        title: "Fertilize with Prebiotics",
+                        description: "Your gut is ready for prebiotic fiber ('bacterial food') to nourish and lock in your new microbial ecosystem.",
+                        foods: [
+                            {
+                                name: "Cooked Red or Brown Lentils",
+                                category: "Legumes & Prebiotics",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Lentils are packed with prebiotic fibers that feed beneficial Bifidobacteria strains!",
+                                science: "Lentil galacto-oligosaccharides (GOS) bypass small intestinal digestion and reach the colon, where commensal bacteria ferment them into butyrate."
+                            },
+                            {
+                                name: "Raw Whole Apple (with skin)",
+                                category: "Produce & Fiber",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Raw apples deliver rich pectin and quercetin polyphenols to lock in healthy flora.",
+                                science: "Apple skin quercetin and pectin fibers act as natural prebiotics that support diversity in your newly established microbial matrix."
+                            },
+                            {
+                                name: "Ripe Tomatoes & Fresh Basil",
+                                category: "Produce",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Fresh tomatoes supply bioavailable lycopene and rich plant antioxidants.",
+                                science: "Lycopene and soluble plant polyphenols scavenge oxidative radicals and stimulate beneficial gut bacterial species."
+                            },
+                            {
+                                name: "Greenish / Slightly Unripe Banana",
+                                category: "Produce & Prebiotics",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Slightly green bananas are packed with resistant starch—the ultimate superfood for good bacteria!",
+                                science: "Unripe bananas contain high levels of RS2 resistant starch that reaches the colon intact where good microbes ferment it directly into butyrate."
+                            },
+                            {
+                                name: "Rolled Oatmeal with Berries",
+                                category: "Grains & Prebiotics",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Beta-glucan soluble fiber in oats forms a gel that feeds healthy gut bacteria and regulates motility.",
+                                science: "Beta-glucan increases intestinal viscosity, slowing transit time slightly to allow thorough nutrient absorption and steady short-chain fatty acid (SCFA) production."
+                            },
+                            {
+                                name: "Poached Tender Chicken Breast",
+                                category: "Lean Protein",
+                                rating: "Recommended",
+                                vegetarian: false,
+                                vegan: false,
+                                summary: "Soft, clean animal protein that pairs easily with your new prebiotic plant side dishes.",
+                                science: "Poaching retains moisture and breaks down connective tissues without adding heavy pan fats, yielding bioavailable amino acids for cellular repair."
+                            },
+                            {
+                                name: "Ice Cream (Standard Traditional)",
+                                category: "Sweets",
+                                rating: "Caution",
+                                vegetarian: true,
+                                vegan: false,
+                                summary: "Enzymes are fully recovered! Enjoy in moderation, but keep portions sensible to prevent heavy fat sluggishness.",
+                                science: "Brush-border lactase is restored to baseline, allowing normal lactose hydrolysis, though heavy saturated fat loads slow gastric motility."
+                            }
+                        ]
+                    }
+                ]
+            },
+            antibiotics: {
+                name: "Post-Antibiotics",
+                subtitle: "14-Day Microbe Recovery Protocol",
+                summary: "Broad-spectrum antibiotics chemically decimate bacterial strains throughout the gut. Unlike a colonoscopy flush, rebuilding species diversity takes 2–4 weeks. Starving yeast early and gradually introducing complex fibers prevents overgrowth.",
+                phases: [
+                    {
+                        id: "ab1",
+                        label: "Phase 1: Yeast Defense",
+                        timeframe: "Days 1 – 3",
+                        title: "Starve Opportunistic Yeasts",
+                        description: "Antibiotics cleared out friendly bacteria, creating open real estate. Strictly avoid refined sugars that feed Candida yeast while taking non-bacterial probiotics.",
+                        foods: [
+                            {
+                                name: "Plain Pasta (Egg or Rice Noodles)",
+                                category: "Grains",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Simple, plain cooked pasta provides gentle energy without fueling fungal yeast expansion.",
+                                science: "Complex starches are hydrolyzed high in the small intestine, providing cellular glucose without leaving free mono-saccharides in the lower gut."
+                            },
+                            {
+                                name: "S. Boulardii Probiotic / Unsweetened Kefir",
+                                category: "Probiotics",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Beneficial non-bacterial yeast probiotic that protects the gut lining while antibiotic levels remain in tissue.",
+                                science: "Saccharomyces boulardii is a transient yeast probiotic resistant to antibacterial drugs. It secretes proteases that neutralize C. difficile toxins and outcompetes Candida."
+                            },
+                            {
+                                name: "Ice Cream & Sugary Desserts",
+                                category: "Sweets",
+                                rating: "Avoid",
+                                vegetarian: true,
+                                vegan: false,
+                                summary: "Strictly avoid ice cream right now! High simple sugars act as rocket fuel for Candida yeast overgrowth.",
+                                science: "When bacterial competition is eliminated by antibiotics, mono- and disaccharides nourish fungal hyphae formation (Candida albicans)."
+                            },
+                            {
+                                name: "Cooked Lentils",
+                                category: "Legumes",
+                                rating: "Caution",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Introduce in small portions. High fermentable fibers can cause severe gas when bacterial populations are thin.",
+                                science: "Galacto-oligosaccharides (GOS) require a robust, established bacterial community to ferment smoothly without producing excess hydrogen gas."
+                            }
+                        ]
+                    },
+                    {
+                        id: "ab2",
+                        label: "Phase 2: Soluble Fuel",
+                        timeframe: "Days 4 – 7",
+                        title: "Fuel Early Bacterial Colonies",
+                        description: "Bacterial populations are beginning to recolonize. Provide gel-forming soluble fibers that feed friendly Bifidobacteria without irritating tender mucosa.",
+                        foods: [
+                            {
+                                name: "Unsweetened Applesauce & Oatmeal",
+                                category: "Soluble Fiber",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Beta-glucan and apple pectin form a soothing gel that feeds nascent bacterial colonies.",
+                                science: "Soluble viscous fibers delay gastric emptying and provide fermentable substrates for early Bifidobacteria to manufacture short-chain fatty acids (SCFAs)."
+                            },
+                            {
+                                name: "Cooked Tomatoes in Olive Oil",
+                                category: "Produce",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Cooked tomatoes supply protective antioxidants and easy soluble fiber to recovering lining.",
+                                science: "Heat breaks down cell walls, releasing lycopene antioxidants that reduce post-antibiotic tissue inflammation."
+                            },
+                            {
+                                name: "Sourdough Pasta & Toast",
+                                category: "Grains",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Slow fermentation pre-digests gluten, making it exceptionally gentle on recovering gut tissue.",
+                                science: "Wild lactic acid fermentation breaks down complex phytates and partially hydrolyzes gluten proteins."
+                            }
+                        ]
+                    },
+                    {
+                        id: "ab3",
+                        label: "Phase 3: Diversity Expansion",
+                        timeframe: "Days 8 – 14",
+                        title: "Rebuild Species Richness",
+                        description: "Your gut ecosystem is stable. Introduce a wide variety of plant polyphenols and raw ferments to restore microbial diversity.",
+                        foods: [
+                            {
+                                name: "Lentil Soup & Dal",
+                                category: "Legumes & Prebiotics",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Rich in GOS prebiotics to fertilize long-term microbial diversity and species richness.",
+                                science: "Galacto-oligosaccharides selectively feed beneficial Bifidobacteria and Faecalibacterium prausnitzii."
+                            },
+                            {
+                                name: "Raw Whole Apples (with skin)",
+                                category: "Produce",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Pectin and polyphenols in raw apple skins serve as premium fertilizer for your new microbiome.",
+                                science: "Bound polyphenols in apple peel are converted by gut microbes into anti-inflammatory compounds."
+                            },
+                            {
+                                name: "Mixed Seeds & Nuts (Chia, Flax, Hemp)",
+                                category: "Prebiotic Seeds",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Delivers diverse polyphenols and mucilage fiber to feed specialized bacterial strains.",
+                                science: "Bound polyphenols in flax and chia seeds are metabolized by gut bacteria into bioavailable anti-inflammatory urolithins."
+                            }
+                        ]
+                    }
+                ]
+            },
+            poisoning: {
+                name: "Post-Food Bug",
+                subtitle: "7-Day Gastro Re-Entry Protocol",
+                summary: "Infectious gastroenteritis damages intestinal villi and strips brush-border enzymes (causing temporary lactose intolerance). Re-entry requires calming acute mucosal inflammation first, then binding stool before returning to full diet.",
+                phases: [
+                    {
+                        id: "fp1",
+                        label: "Day 1: Rest & Rehydrate",
+                        timeframe: "Hours 0 – 24",
+                        title: "Settle Inflammation & Restore Fluid",
+                        description: "Your stomach suffered acute infectious inflammation. Prioritize fluid retention, electrolytes, and zero-fiber soothing liquids.",
+                        foods: [
+                            {
+                                name: "Coconut Water & Oral Rehydration Solution",
+                                category: "Beverages",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Restores crucial sodium and potassium lost from stomach distress.",
+                                science: "Sodium-glucose co-transport pumps (SGLT1) in the small intestine utilize specific sodium-to-sugar ratios for rapid cellular rehydration."
+                            },
+                            {
+                                name: "Ice Cream & Milk Desserts",
+                                category: "Dairy",
+                                rating: "Avoid",
+                                vegetarian: true,
+                                vegan: false,
+                                summary: "Steer clear of ice cream and dairy. Acute gastroenteritis temporarily destroys lactase enzymes.",
+                                science: "Infectious enteritis blunts intestinal villi, stripping brush-border lactase enzymes and leading to secondary lactose intolerance for several days."
+                            },
+                            {
+                                name: "Raw Tomatoes & Acids",
+                                category: "Produce",
+                                rating: "Avoid",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Avoid raw tomatoes and citrus. High natural acids sting raw, inflamed stomach tissue.",
+                                science: "Low pH organic acids trigger nociceptors in denuded mucosal tissue, re-triggering nausea and gastric spasms."
+                            }
+                        ]
+                    },
+                    {
+                        id: "fp2",
+                        label: "Days 2-3: Binding & Stool Firming",
+                        timeframe: "Hours 24 – 72",
+                        title: "Stabilize Stool & Motility",
+                        description: "Introduce soft, low-residue binding foods (BRAT principles) to absorb excess fluid and quiet intestinal spasms.",
+                        foods: [
+                            {
+                                name: "Plain White Pasta & White Rice",
+                                category: "Carbs",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Plain white pasta binds loose stool and restores baseline energy without heavy fiber.",
+                                science: "Low-residue refined starch is absorbed high in the small intestine, requiring zero bacterial fermentation."
+                            },
+                            {
+                                name: "Applesauce (Unsweetened)",
+                                category: "Pectin / Fruit",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Soluble pectin acts like a sponge to absorb excess water in your digestive tract.",
+                                science: "Pectin forms a gel in the lumen that slows transit time, binds excess fluid, and absorbs bacterial enterotoxins."
+                            },
+                            {
+                                name: "Mashed Sweet Potato (No Skin)",
+                                category: "Produce",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Soft, peeled sweet potato delivers easy beta-carotene and gentle starch.",
+                                science: "Soluble fiber and potassium restore mucosal cellular hydration without mechanical roughness from skins."
+                            }
+                        ]
+                    },
+                    {
+                        id: "fp3",
+                        label: "Days 4-7: Full Gut Re-Entry",
+                        timeframe: "Days 4 – 7",
+                        title: "Reintroduce Normal Nutrition",
+                        description: "Villi and brush-border enzymes have regenerated. Gradually return to clean proteins, cooked vegetables, and legumes.",
+                        foods: [
+                            {
+                                name: "Cooked Lentils & Mild Dal",
+                                category: "Legumes",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Villi are healed! Reintroduce soft lentils to rebuild fiber intake and muscle strength.",
+                                science: "Regenerated brush-border membrane can now process complex oligosaccharides and plant proteins smoothly."
+                            },
+                            {
+                                name: "Raw Apples & Tomatoes",
+                                category: "Produce",
+                                rating: "Caution",
+                                vegetarian: true,
+                                vegan: true,
+                                summary: "Reintroduce slowly. Peel apple skins if your stomach still feels delicate.",
+                                science: "Enzyme output is restored, but high insoluble skin fiber can still cause minor cramps if motility is irritable."
+                            },
+                            {
+                                name: "Ice Cream (Small Portion)",
+                                category: "Dairy / Sweets",
+                                rating: "Caution",
+                                vegetarian: true,
+                                vegan: false,
+                                summary: "Lactase enzymes have returned! Enjoy a small scoop, but avoid heavy, greasy sundaes.",
+                                science: "Villous tips have recovered lactase production; small dairy portions are now digested without diarrhea."
+                            }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        // App State
+        let currentTrack = 'colonoscopy';
+        let currentPhaseIndex = 0;
+        let activeFilter = 'all';
+        let activeDiet = 'all'; // 'all', 'veg', 'vegan'
+
+        // Initialize App
+        window.addEventListener('DOMContentLoaded', () => {
+            setTrack('colonoscopy');
+        });
+
+        function setTrack(trackKey) {
+            currentTrack = trackKey;
+            currentPhaseIndex = 0;
+
+            // Update Track Button Selection Styles
+            document.querySelectorAll('.track-btn').forEach(btn => {
+                btn.className = "track-btn py-2.5 px-2 rounded-xl text-xs sm:text-sm font-medium text-stone-600 transition-all text-center flex flex-col sm:flex-row items-center justify-center gap-1.5 hover:text-stone-900";
+            });
+            const activeBtn = document.getElementById(`btn-${trackKey}`);
+            if (activeBtn) {
+                activeBtn.className = "track-btn py-2.5 px-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-center flex flex-col sm:flex-row items-center justify-center gap-1.5 shadow-sm bg-white text-sage-800 border border-stone-200";
+            }
+
+            // Update Dynamic Track Summary Intro
+            const summaryEl = document.getElementById('track-summary-text');
+            if (summaryEl && TRACKS[trackKey]) {
+                summaryEl.innerText = TRACKS[trackKey].summary;
+            }
+
+            renderPhases();
+            renderPhaseContext();
+            renderFoods();
+        }
+
+        function setDiet(dietType) {
+            activeDiet = dietType;
+            document.querySelectorAll('.diet-btn').forEach(btn => {
+                btn.className = "diet-btn flex-1 py-1.5 px-2 rounded-xl font-medium text-stone-600 hover:text-stone-900 transition-all text-center";
+            });
+            const activeBtn = document.getElementById(`diet-${dietType}`);
+            if (activeBtn) {
+                activeBtn.className = "diet-btn flex-1 py-1.5 px-2 rounded-xl font-bold transition-all text-center bg-stone-900 text-white shadow-sm";
+            }
+            renderFoods();
+        }
+
+        function renderPhases() {
+            const phaseContainer = document.getElementById('phase-buttons');
+            phaseContainer.innerHTML = '';
+            
+            const phases = TRACKS[currentTrack].phases;
+            phases.forEach((phase, idx) => {
+                const isSelected = idx === currentPhaseIndex;
+                const btn = document.createElement('button');
+                btn.onclick = () => selectPhase(idx);
+                btn.className = `flex-1 min-w-[140px] px-3 py-2 rounded-xl text-xs font-bold transition-all border text-center ${
+                    isSelected 
+                    ? 'bg-sage-500 text-white border-sage-600 shadow-sm' 
+                    : 'bg-white text-stone-600 border-stone-200 hover:bg-stone-50'
+                }`;
+                btn.innerText = phase.label;
+                phaseContainer.appendChild(btn);
+            });
+        }
+
+        function selectPhase(index) {
+            currentPhaseIndex = index;
+            renderPhases();
+            renderPhaseContext();
+            renderFoods();
+        }
+
+        function renderPhaseContext() {
+            const phase = TRACKS[currentTrack].phases[currentPhaseIndex];
+            document.getElementById('phase-timeframe').innerText = phase.timeframe;
+            document.getElementById('phase-title').innerText = phase.title;
+            document.getElementById('phase-description').innerText = phase.description;
+        }
+
+        function setFilter(filter) {
+            activeFilter = filter;
+            document.querySelectorAll('.filter-chip').forEach(chip => {
+                chip.className = "filter-chip px-3 py-1.5 rounded-full font-medium text-stone-600 bg-white border border-stone-200 hover:bg-stone-50";
+            });
+            event.target.className = "filter-chip px-3 py-1.5 rounded-full font-semibold transition-colors bg-stone-900 text-white";
+            renderFoods();
+        }
+
+        function renderFoods() {
+            const foodGrid = document.getElementById('food-grid');
+            foodGrid.innerHTML = '';
+
+            const phase = TRACKS[currentTrack].phases[currentPhaseIndex];
+            const searchQuery = document.getElementById('food-search').value.toLowerCase().trim();
+
+            let foods = phase.foods.filter(food => {
+                const matchesSearch = food.name.toLowerCase().includes(searchQuery) || 
+                                     food.category.toLowerCase().includes(searchQuery) ||
+                                     food.summary.toLowerCase().includes(searchQuery);
+                const matchesFilter = activeFilter === 'all' || food.rating === activeFilter;
+                
+                let matchesDiet = true;
+                if (activeDiet === 'veg') matchesDiet = food.vegetarian === true;
+                if (activeDiet === 'vegan') matchesDiet = food.vegan === true;
+
+                return matchesSearch && matchesFilter && matchesDiet;
+            });
+
+            if (foods.length === 0) {
+                foodGrid.innerHTML = `
+                    <div class="bg-white rounded-2xl p-6 text-center border border-stone-200 space-y-1">
+                        <p class="text-2xl">🔍</p>
+                        <p class="font-bold text-stone-800 text-sm">No food recommendations found</p>
+                        <p class="text-xs text-stone-500">Try adjusting your search query or clearing your dietary filters.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            foods.forEach((food, idx) => {
+                const card = document.createElement('div');
+                card.className = "bg-white border border-stone-200/80 rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow space-y-3";
+
+                let badgeStyle = "bg-emerald-50 text-emerald-700 border-emerald-200";
+                let badgeIcon = "✅";
+                if (food.rating === 'Caution') {
+                    badgeStyle = "bg-amber-50 text-amber-700 border-amber-200";
+                    badgeIcon = "⚠️";
+                } else if (food.rating === 'Avoid') {
+                    badgeStyle = "bg-rose-50 text-rose-700 border-rose-200";
+                    badgeIcon = "🛑";
+                }
+
+                let dietBadge = "";
+                if (food.vegan) {
+                    dietBadge = `<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">🌿 Vegan</span>`;
+                } else if (food.vegetarian) {
+                    dietBadge = `<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-lime-100 text-lime-800 border border-lime-200">🌱 Veg</span>`;
+                }
+
+                card.innerHTML = `
+                    <div class="flex items-start justify-between gap-2">
+                        <div>
+                            <div class="flex items-center gap-1.5 mb-0.5">
+                                <span class="text-[10px] font-bold tracking-wider uppercase text-stone-400 block">${food.category}</span>
+                                ${dietBadge}
+                            </div>
+                            <h4 class="font-extrabold text-stone-900 text-base">${food.name}</h4>
+                        </div>
+                        <span class="inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full border ${badgeStyle} shrink-0">
+                            <span>${badgeIcon}</span>
+                            <span>${food.rating}</span>
+                        </span>
+                    </div>
+
+                    <p class="text-xs sm:text-sm text-stone-700 font-medium leading-relaxed">
+                        ${food.summary}
+                    </p>
+
+                    <!-- Science Progressive Disclosure Toggle -->
+                    <div class="pt-2 border-t border-stone-100">
+                        <button onclick="toggleScience('${currentTrack}-${currentPhaseIndex}-${idx}')" 
+                            class="text-xs font-bold text-sage-600 hover:text-sage-800 flex items-center gap-1 transition-colors">
+                            <span>Geek Out 🧪</span>
+                            <span id="arrow-${currentTrack}-${currentPhaseIndex}-${idx}" class="text-[10px] transition-transform">▼</span>
+                        </button>
+                        <div id="science-${currentTrack}-${currentPhaseIndex}-${idx}" class="hidden mt-2 p-3 bg-sage-50/70 border border-sage-100 rounded-xl text-xs text-stone-700 leading-relaxed space-y-1">
+                            <span class="font-bold text-sage-800 block">Biochemical Mechanics:</span>
+                            <p>${food.science}</p>
+                        </div>
+                    </div>
+                `;
+                foodGrid.appendChild(card);
+            });
+        }
+
+        function toggleScience(id) {
+            const panel = document.getElementById(`science-${id}`);
+            const arrow = document.getElementById(`arrow-${id}`);
+            if (panel.classList.contains('hidden')) {
+                panel.classList.remove('hidden');
+                arrow.style.transform = 'rotate(180deg)';
+            } else {
+                panel.classList.add('hidden');
+                arrow.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        function togglePwaModal() {
+            const modal = document.getElementById('pwa-modal');
+            modal.classList.toggle('hidden');
+        }
+    </script>
+
+    <!-- PWA Offline Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('data:text/javascript,' + encodeURIComponent(`
+            const CACHE_NAME = 'repoopulate-v2';
+            self.addEventListener('install', e => {
+              e.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(['/'])));
+            });
+            self.addEventListener('fetch', e => {
+              e.respondWith(caches.match(e.request).then(res => res || fetch(e.request)));
+            });
+          `), { scope: '/' }).catch(() => {});
+        });
+      }
+    </script>
 </body>
 </html>
