@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="en" class="h-full bg-[#FAF7F2]">
 <head>
     <meta charset="UTF-8">
@@ -76,7 +76,6 @@
 </head>
 <body class="font-sans text-stone-800 h-full flex flex-col antialiased bg-[#FAF7F2] selection:bg-sage-100">
 
-    <!-- Header & Brand Bar -->
     <header class="bg-white border-b border-oat-dark shadow-sm sticky top-0 z-50">
         <div class="max-w-3xl mx-auto px-4 py-3 sm:px-6 flex items-center justify-between">
             <div class="flex items-center space-x-2.5">
@@ -104,7 +103,6 @@
         </div>
     </header>
 
-    <!-- Subdeck Subtitle Banner -->
     <section class="bg-oat/60 border-b border-oat-dark/50 py-3.5 px-4 text-center">
         <p class="max-w-2xl mx-auto text-xs sm:text-sm text-stone-600 font-medium leading-relaxed">
             “The practical guide on what to eat to rebuild a healthy gut biome after a <strong class="text-stone-900">colonoscopy</strong>, <strong class="text-stone-900">antibiotics</strong>, or <strong class="text-stone-900">food poisoning</strong>.”
@@ -183,12 +181,13 @@
                 </div>
             </div>
 
-            <!-- Dietary Preference Filter Bar -->
-            <div class="flex items-center space-x-2 bg-oat/50 p-1.5 rounded-2xl border border-oat-dark/40 text-xs">
+            <!-- Dietary Preference Filter Bar (Including Gluten-Free) -->
+            <div class="flex items-center space-x-1.5 bg-oat/50 p-1.5 rounded-2xl border border-oat-dark/40 text-xs overflow-x-auto custom-scrollbar">
                 <span class="font-bold text-stone-500 pl-2 hidden sm:inline">Diet:</span>
-                <button onclick="setDiet('all')" id="diet-all" class="diet-btn flex-1 py-1.5 px-2 rounded-xl font-bold transition-all text-center bg-stone-900 text-white shadow-sm">All Diets</button>
-                <button onclick="setDiet('veg')" id="diet-veg" class="diet-btn flex-1 py-1.5 px-2 rounded-xl font-medium text-stone-600 hover:text-stone-900 transition-all text-center">🌱 Vegetarian</button>
-                <button onclick="setDiet('vegan')" id="diet-vegan" class="diet-btn flex-1 py-1.5 px-2 rounded-xl font-medium text-stone-600 hover:text-stone-900 transition-all text-center">🌿 Vegan</button>
+                <button onclick="setDiet('all')" id="diet-all" class="diet-btn flex-1 py-1.5 px-2 rounded-xl font-bold transition-all text-center bg-stone-900 text-white shadow-sm whitespace-nowrap">All</button>
+                <button onclick="setDiet('veg')" id="diet-veg" class="diet-btn flex-1 py-1.5 px-2 rounded-xl font-medium text-stone-600 hover:text-stone-900 transition-all text-center whitespace-nowrap">🌱 Veg</button>
+                <button onclick="setDiet('vegan')" id="diet-vegan" class="diet-btn flex-1 py-1.5 px-2 rounded-xl font-medium text-stone-600 hover:text-stone-900 transition-all text-center whitespace-nowrap">🌿 Vegan</button>
+                <button onclick="setDiet('gf')" id="diet-gf" class="diet-btn flex-1 py-1.5 px-2 rounded-xl font-medium text-stone-600 hover:text-stone-900 transition-all text-center whitespace-nowrap">🌾 Gluten-Free</button>
             </div>
 
             <!-- Filter Chips -->
@@ -251,9 +250,8 @@
         </div>
     </footer>
 
-    <!-- Application Logic Script -->
     <script>
-        // Datasets for the three tracks
+        // Datasets for the three recovery tracks with realistic timeframes
         const TRACKS = {
             colonoscopy: {
                 name: "Post-Colonoscopy",
@@ -273,6 +271,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: false,
                                 summary: "Soft, plain white pasta provides easy binding energy without irritating tender gut walls.",
                                 science: "Refined wheat starch has had insoluble bran removed, yielding low-residue gelatinized starch that requires minimal digestive breakdown."
                             },
@@ -282,6 +281,7 @@
                                 rating: "Recommended",
                                 vegetarian: false,
                                 vegan: false,
+                                glutenFree: true,
                                 summary: "Warm bone broth coats your sensitive stomach and helps it heal gently.",
                                 science: "Rich in amino acids like L-glutamine and glycine, which act as substrates to rebuild damaged mucosal lining cells (enterocytes) without triggering heavy digestion."
                             },
@@ -291,6 +291,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Soothing plant-based broth rich in bioavailable minerals, potassium, and easy electrolytes.",
                                 science: "Gentle liquid extraction delivers key electrolytes (potassium, magnesium) and soluble glutamine without fat or fiber, ensuring zero GI mechanical stress."
                             },
@@ -300,6 +301,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Soft, well-cooked white rice is ultra-gentle and restores basic energy.",
                                 science: "Extended boiling gelatinizes amylose starches, making them rapidly absorbable with minimal pancreatic enzyme output."
                             },
@@ -309,6 +311,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: false,
                                 summary: "Simple white toast or crackers provide easy binding energy without rough bran fiber.",
                                 science: "Refined flour has stripped insoluble bran, leaving low-residue starch that passes easily without mechanical friction on tender villi."
                             },
@@ -318,6 +321,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: false,
+                                glutenFree: true,
                                 summary: "Soft, highly bioavailable protein that is exceptionally gentle on your recovering digestive tract.",
                                 science: "Eggs have a high biological value (HBV) and near-zero insoluble fiber content, allowing maximum nutrient absorption with minimal mechanical effort."
                             },
@@ -327,6 +331,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Ultra-soft, delicate plant protein that glides over tender gut lining.",
                                 science: "Silken soy protein has undergone coagulation, removing tough fibers. Its soft structure requires virtually zero mechanical digestion in the stomach."
                             },
@@ -336,6 +341,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Soft ripe banana supplies easy potassium and gentle, soothing fruit pectin.",
                                 science: "As bananas ripen, resistant starches convert into simple glucose and fructose, making them easy to digest on Day 1 while supplying electrolyte potassium."
                             },
@@ -345,6 +351,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Warm or smooth applesauce delivers soothing soluble pectin without tough fruit skins.",
                                 science: "Cooking apples breaks down structural plant walls, releasing soluble pectin that forms a gelatinous protective layer over mucosal tissue."
                             },
@@ -354,6 +361,7 @@
                                 rating: "Avoid",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Avoid raw apple skins today. Heavy insoluble cellulose acts like sandpaper on a freshly prepped gut.",
                                 science: "Uncooked apple skin consists of dense insoluble cellulose and cutin polymers that cause mechanical friction against un-mucinized intestinal villi."
                             },
@@ -363,6 +371,7 @@
                                 rating: "Avoid",
                                 vegetarian: true,
                                 vegan: false,
+                                glutenFree: true,
                                 summary: "Avoid ice cream today. High saturated fats, cold temperatures, and unfermented lactose can trigger rapid cramping.",
                                 science: "Cold lipid loads stimulate rapid cholecystokinin (CCK) release, accelerating gastric emptying and gastrocolic reflexes in a clean, sedated bowel."
                             },
@@ -372,6 +381,7 @@
                                 rating: "Avoid",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Save lentils for Day 3. High galacto-oligosaccharides cause sudden gas when resident bacteria are low.",
                                 science: "Lentils contain galacto-oligosaccharides (GOS) that undergo rapid, erratic fermentation in a clean bowel, leading to painful distension."
                             },
@@ -381,6 +391,7 @@
                                 rating: "Avoid",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Avoid acidic raw tomatoes or heavy marinara today to protect your sensitive stomach lining.",
                                 science: "High concentrations of citric and malic acids combined with raw tomato skin seeds chemically irritate sensitive gastric and intestinal mucosal tissue."
                             },
@@ -390,6 +401,7 @@
                                 rating: "Caution",
                                 vegetarian: true,
                                 vegan: false,
+                                glutenFree: true,
                                 summary: "Watch out for high added sugar. Added sweeteners can feed opportunistic bacteria and cause gas.",
                                 science: "High simple sugar concentrations increase luminal osmotic pressure, drawing water into the intestine and accelerating transit time."
                             },
@@ -399,6 +411,7 @@
                                 rating: "Caution",
                                 vegetarian: true,
                                 vegan: false,
+                                glutenFree: true,
                                 summary: "Proceed carefully; bowel prep causes a temporary 'lactase wash-out' that makes dairy hard to break down today.",
                                 science: "Prep strips brush-border lactase enzymes. While yogurt contains beneficial live strains, unfermented lactose can cause acute gas and bloating."
                             },
@@ -408,6 +421,7 @@
                                 rating: "Avoid",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Hold off on caffeine today. It stimulates sudden gut contractions and stomach acid.",
                                 science: "Caffeine stimulates gastrin release and colon hyper-motility, which can trigger painful spasms in a clean, sedated digestive tract."
                             },
@@ -417,6 +431,7 @@
                                 rating: "Avoid",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: false,
                                 summary: "Save whole grains for Day 3. Sharp seeds and coarse bran scrape sensitive mucosal lining today.",
                                 science: "Insoluble wheat bran cellulose acts as a mechanical abrasive on un-mucinized epithelial tissue, provoking cramping."
                             }
@@ -435,6 +450,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: false,
                                 summary: "Easy energy starch paired with healthy olive oil to soothe the digestive tract.",
                                 science: "Monounsaturated fats in olive oil stimulate mild, healthy bile flow without triggering hyper-motility."
                             },
@@ -444,6 +460,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: false,
+                                glutenFree: true,
                                 summary: "Enzymes have stabilized! Live active strains now help seed your clean gut microbiome.",
                                 science: "Cultured dairy introduces live strains that produce lactic acid, creating an acidic pH hostile to opportunistic pathogens."
                             },
@@ -453,6 +470,7 @@
                                 rating: "Caution",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Cooked tomato in small portions is gentle, but avoid heavy acidic marinara sauce.",
                                 science: "Thermal processing degrades raw plant cellular structures and softens acidity, making lycopene antioxidants accessible without harsh mucosal sting."
                             },
@@ -462,6 +480,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Plant-based fermented probiotics seed friendly flora without any lactose risk.",
                                 science: "Delivers active transient strains (L. acidophilus, B. bifidum) in a plant-milk matrix, helping re-establish acidic luminal pH to deter pathogens."
                             },
@@ -471,6 +490,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: false,
                                 summary: "Wild fermentation pre-digests gluten and starches, making sourdough easier to digest.",
                                 science: "Lactic acid bacteria in traditional sourdough wild fermentation degrade phytic acid and partially hydrolyze gluten proteins."
                             },
@@ -480,6 +500,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Soft, peeled, cooked veggies supply gentle pectin fuel for early bacterial colonies.",
                                 science: "Cooking degrades tough pectin matrices into soft soluble fibers that nascent commensal bacteria easily ferment into protective SCFAs."
                             },
@@ -489,6 +510,7 @@
                                 rating: "Caution",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Start with a small spoonful of well-cooked red lentil soup to test fiber tolerance.",
                                 science: "Pureeing or thorough cooking breaks down mechanical legume skins, reducing mechanical load while delivering early oligosaccharide prebiotic fuel."
                             },
@@ -498,6 +520,7 @@
                                 rating: "Caution",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "If craving something cold, opt for a small portion of low-sugar or coconut-milk ice cream.",
                                 science: "Plant-based milk matrices avoid lactose osmotic pressure, though high fat content still requires moderate biliary digestion."
                             },
@@ -507,6 +530,7 @@
                                 rating: "Caution",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Chew peeled raw apple slices thoroughly. Peeling removes insoluble skin fiber.",
                                 science: "Removing apple skins strips the harsh insoluble cellulose while retaining soluble pectin and bioavailable polyphenol antioxidants."
                             }
@@ -525,6 +549,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Lentils are packed with prebiotic fibers that feed beneficial Bifidobacteria strains!",
                                 science: "Lentil galacto-oligosaccharides (GOS) bypass small intestinal digestion and reach the colon, where commensal bacteria ferment them into butyrate."
                             },
@@ -534,6 +559,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Raw apples deliver rich pectin and quercetin polyphenols to lock in healthy flora.",
                                 science: "Apple skin quercetin and pectin fibers act as natural prebiotics that support diversity in your newly established microbial matrix."
                             },
@@ -543,6 +569,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Fresh tomatoes supply bioavailable lycopene and rich plant antioxidants.",
                                 science: "Lycopene and soluble plant polyphenols scavenge oxidative radicals and stimulate beneficial gut bacterial species."
                             },
@@ -552,6 +579,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Slightly green bananas are packed with resistant starch—the ultimate superfood for good bacteria!",
                                 science: "Unripe bananas contain high levels of RS2 resistant starch that reaches the colon intact where good microbes ferment it directly into butyrate."
                             },
@@ -561,6 +589,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Beta-glucan soluble fiber in oats forms a gel that feeds healthy gut bacteria and regulates motility.",
                                 science: "Beta-glucan increases intestinal viscosity, slowing transit time slightly to allow thorough nutrient absorption and steady short-chain fatty acid (SCFA) production."
                             },
@@ -570,6 +599,7 @@
                                 rating: "Recommended",
                                 vegetarian: false,
                                 vegan: false,
+                                glutenFree: true,
                                 summary: "Soft, clean animal protein that pairs easily with your new prebiotic plant side dishes.",
                                 science: "Poaching retains moisture and breaks down connective tissues without adding heavy pan fats, yielding bioavailable amino acids for cellular repair."
                             },
@@ -579,6 +609,7 @@
                                 rating: "Caution",
                                 vegetarian: true,
                                 vegan: false,
+                                glutenFree: true,
                                 summary: "Enzymes are fully recovered! Enjoy in moderation, but keep portions sensible to prevent heavy fat sluggishness.",
                                 science: "Brush-border lactase is restored to baseline, allowing normal lactose hydrolysis, though heavy saturated fat loads slow gastric motility."
                             }
@@ -599,12 +630,13 @@
                         description: "Antibiotics cleared out friendly bacteria, creating open real estate. Strictly avoid refined sugars that feed Candida yeast while taking non-bacterial probiotics.",
                         foods: [
                             {
-                                name: "Plain Pasta (Egg or Rice Noodles)",
+                                name: "Plain Rice Noodles or Gluten-Free Pasta",
                                 category: "Grains",
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
-                                summary: "Simple, plain cooked pasta provides gentle energy without fueling fungal yeast expansion.",
+                                glutenFree: true,
+                                summary: "Simple, plain cooked rice pasta provides gentle energy without fueling fungal yeast expansion.",
                                 science: "Complex starches are hydrolyzed high in the small intestine, providing cellular glucose without leaving free mono-saccharides in the lower gut."
                             },
                             {
@@ -613,6 +645,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Beneficial non-bacterial yeast probiotic that protects the gut lining while antibiotic levels remain in tissue.",
                                 science: "Saccharomyces boulardii is a transient yeast probiotic resistant to antibacterial drugs. It secretes proteases that neutralize C. difficile toxins and outcompetes Candida."
                             },
@@ -622,6 +655,7 @@
                                 rating: "Avoid",
                                 vegetarian: true,
                                 vegan: false,
+                                glutenFree: true,
                                 summary: "Strictly avoid ice cream right now! High simple sugars act as rocket fuel for Candida yeast overgrowth.",
                                 science: "When bacterial competition is eliminated by antibiotics, mono- and disaccharides nourish fungal hyphae formation (Candida albicans)."
                             },
@@ -631,6 +665,7 @@
                                 rating: "Caution",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Introduce in small portions. High fermentable fibers can cause severe gas when bacterial populations are thin.",
                                 science: "Galacto-oligosaccharides (GOS) require a robust, established bacterial community to ferment smoothly without producing excess hydrogen gas."
                             }
@@ -649,6 +684,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Beta-glucan and apple pectin form a soothing gel that feeds nascent bacterial colonies.",
                                 science: "Soluble viscous fibers delay gastric emptying and provide fermentable substrates for early Bifidobacteria to manufacture short-chain fatty acids (SCFAs)."
                             },
@@ -658,6 +694,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Cooked tomatoes supply protective antioxidants and easy soluble fiber to recovering lining.",
                                 science: "Heat breaks down cell walls, releasing lycopene antioxidants that reduce post-antibiotic tissue inflammation."
                             },
@@ -667,6 +704,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: false,
                                 summary: "Slow fermentation pre-digests gluten, making it exceptionally gentle on recovering gut tissue.",
                                 science: "Wild lactic acid fermentation breaks down complex phytates and partially hydrolyzes gluten proteins."
                             }
@@ -685,6 +723,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Rich in GOS prebiotics to fertilize long-term microbial diversity and species richness.",
                                 science: "Galacto-oligosaccharides selectively feed beneficial Bifidobacteria and Faecalibacterium prausnitzii."
                             },
@@ -694,6 +733,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Pectin and polyphenols in raw apple skins serve as premium fertilizer for your new microbiome.",
                                 science: "Bound polyphenols in apple peel are converted by gut microbes into anti-inflammatory compounds."
                             },
@@ -703,6 +743,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Delivers diverse polyphenols and mucilage fiber to feed specialized bacterial strains.",
                                 science: "Bound polyphenols in flax and chia seeds are metabolized by gut bacteria into bioavailable anti-inflammatory urolithins."
                             }
@@ -728,6 +769,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Restores crucial sodium and potassium lost from stomach distress.",
                                 science: "Sodium-glucose co-transport pumps (SGLT1) in the small intestine utilize specific sodium-to-sugar ratios for rapid cellular rehydration."
                             },
@@ -737,6 +779,7 @@
                                 rating: "Avoid",
                                 vegetarian: true,
                                 vegan: false,
+                                glutenFree: true,
                                 summary: "Steer clear of ice cream and dairy. Acute gastroenteritis temporarily destroys lactase enzymes.",
                                 science: "Infectious enteritis blunts intestinal villi, stripping brush-border lactase enzymes and leading to secondary lactose intolerance for several days."
                             },
@@ -746,6 +789,7 @@
                                 rating: "Avoid",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Avoid raw tomatoes and citrus. High natural acids sting raw, inflamed stomach tissue.",
                                 science: "Low pH organic acids trigger nociceptors in denuded mucosal tissue, re-triggering nausea and gastric spasms."
                             }
@@ -759,12 +803,13 @@
                         description: "Introduce soft, low-residue binding foods (BRAT principles) to absorb excess fluid and quiet intestinal spasms.",
                         foods: [
                             {
-                                name: "Plain White Pasta & White Rice",
+                                name: "Plain Rice Pasta or White Rice",
                                 category: "Carbs",
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
-                                summary: "Plain white pasta binds loose stool and restores baseline energy without heavy fiber.",
+                                glutenFree: true,
+                                summary: "Plain white rice pasta or rice binds loose stool and restores baseline energy without heavy fiber.",
                                 science: "Low-residue refined starch is absorbed high in the small intestine, requiring zero bacterial fermentation."
                             },
                             {
@@ -773,6 +818,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Soluble pectin acts like a sponge to absorb excess water in your digestive tract.",
                                 science: "Pectin forms a gel in the lumen that slows transit time, binds excess fluid, and absorbs bacterial enterotoxins."
                             },
@@ -782,6 +828,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Soft, peeled sweet potato delivers easy beta-carotene and gentle starch.",
                                 science: "Soluble fiber and potassium restore mucosal cellular hydration without mechanical roughness from skins."
                             }
@@ -800,6 +847,7 @@
                                 rating: "Recommended",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Villi are healed! Reintroduce soft lentils to rebuild fiber intake and muscle strength.",
                                 science: "Regenerated brush-border membrane can now process complex oligosaccharides and plant proteins smoothly."
                             },
@@ -809,6 +857,7 @@
                                 rating: "Caution",
                                 vegetarian: true,
                                 vegan: true,
+                                glutenFree: true,
                                 summary: "Reintroduce slowly. Peel apple skins if your stomach still feels delicate.",
                                 science: "Enzyme output is restored, but high insoluble skin fiber can still cause minor cramps if motility is irritable."
                             },
@@ -818,6 +867,7 @@
                                 rating: "Caution",
                                 vegetarian: true,
                                 vegan: false,
+                                glutenFree: true,
                                 summary: "Lactase enzymes have returned! Enjoy a small scoop, but avoid heavy, greasy sundaes.",
                                 science: "Villous tips have recovered lactase production; small dairy portions are now digested without diarrhea."
                             }
@@ -831,7 +881,7 @@
         let currentTrack = 'colonoscopy';
         let currentPhaseIndex = 0;
         let activeFilter = 'all';
-        let activeDiet = 'all'; // 'all', 'veg', 'vegan'
+        let activeDiet = 'all'; // 'all', 'veg', 'vegan', 'gf'
 
         // Initialize App
         window.addEventListener('DOMContentLoaded', () => {
@@ -865,11 +915,11 @@
         function setDiet(dietType) {
             activeDiet = dietType;
             document.querySelectorAll('.diet-btn').forEach(btn => {
-                btn.className = "diet-btn flex-1 py-1.5 px-2 rounded-xl font-medium text-stone-600 hover:text-stone-900 transition-all text-center";
+                btn.className = "diet-btn flex-1 py-1.5 px-2 rounded-xl font-medium text-stone-600 hover:text-stone-900 transition-all text-center whitespace-nowrap";
             });
             const activeBtn = document.getElementById(`diet-${dietType}`);
             if (activeBtn) {
-                activeBtn.className = "diet-btn flex-1 py-1.5 px-2 rounded-xl font-bold transition-all text-center bg-stone-900 text-white shadow-sm";
+                activeBtn.className = "diet-btn flex-1 py-1.5 px-2 rounded-xl font-bold transition-all text-center bg-stone-900 text-white shadow-sm whitespace-nowrap";
             }
             renderFoods();
         }
@@ -932,6 +982,7 @@
                 let matchesDiet = true;
                 if (activeDiet === 'veg') matchesDiet = food.vegetarian === true;
                 if (activeDiet === 'vegan') matchesDiet = food.vegan === true;
+                if (activeDiet === 'gf') matchesDiet = food.glutenFree === true;
 
                 return matchesSearch && matchesFilter && matchesDiet;
             });
@@ -961,19 +1012,22 @@
                     badgeIcon = "🛑";
                 }
 
-                let dietBadge = "";
+                let dietBadges = "";
+                if (food.glutenFree) {
+                    dietBadges += `<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200">🌾 GF</span> `;
+                }
                 if (food.vegan) {
-                    dietBadge = `<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">🌿 Vegan</span>`;
+                    dietBadges += `<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">🌿 Vegan</span>`;
                 } else if (food.vegetarian) {
-                    dietBadge = `<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-lime-100 text-lime-800 border border-lime-200">🌱 Veg</span>`;
+                    dietBadges += `<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-lime-100 text-lime-800 border border-lime-200">🌱 Veg</span>`;
                 }
 
                 card.innerHTML = `
                     <div class="flex items-start justify-between gap-2">
                         <div>
-                            <div class="flex items-center gap-1.5 mb-0.5">
+                            <div class="flex items-center gap-1.5 mb-0.5 flex-wrap">
                                 <span class="text-[10px] font-bold tracking-wider uppercase text-stone-400 block">${food.category}</span>
-                                ${dietBadge}
+                                ${dietBadges}
                             </div>
                             <h4 class="font-extrabold text-stone-900 text-base">${food.name}</h4>
                         </div>
@@ -1027,7 +1081,7 @@
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('data:text/javascript,' + encodeURIComponent(`
-            const CACHE_NAME = 'repoopulate-v2';
+            const CACHE_NAME = 'repoopulate-v3';
             self.addEventListener('install', e => {
               e.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(['/'])));
             });
