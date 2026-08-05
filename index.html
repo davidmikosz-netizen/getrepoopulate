@@ -72,6 +72,20 @@
             background: #4A7C59;
             border-radius: 999px;
         }
+
+        /* Dedicated Print Stylesheet for PDF/Print Discharge Grocery Summary */
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            header, section, footer, main, #saved-plan-modal, #feedback-modal, #tip-modal, #pwa-modal {
+                display: none !important;
+            }
+            #print-summary-view {
+                display: block !important;
+            }
+        }
     </style>
 </head>
 <body class="font-sans text-stone-800 h-full flex flex-col antialiased bg-[#FAF7F2] selection:bg-sage-100">
@@ -92,6 +106,11 @@
                 </div>
             </div>
             <div class="flex items-center space-x-1.5 sm:space-x-2">
+                <!-- Printable Summary Button -->
+                <button onclick="triggerPrintSummary()" title="Print Grocery Discharge Summary" class="text-xs font-bold text-stone-700 bg-white hover:bg-stone-50 border border-stone-200 px-2.5 py-1.5 rounded-full transition-colors flex items-center gap-1 shadow-sm">
+                    <span>🖨️</span>
+                    <span class="hidden sm:inline">Print Guide</span>
+                </button>
                 <!-- Saved Plan Badge/Button -->
                 <button onclick="toggleSavedPlanModal()" class="text-xs font-bold text-sage-800 bg-sage-50 hover:bg-sage-100 border border-sage-200 px-2.5 py-1.5 rounded-full transition-colors flex items-center gap-1">
                     <span>📌</span>
@@ -231,9 +250,14 @@
                 <!-- Saved items render here -->
             </div>
 
-            <button onclick="toggleSavedPlanModal()" class="w-full py-2.5 bg-stone-900 hover:bg-stone-800 text-white font-bold rounded-2xl text-xs transition-colors shadow-md">
-                Close Plan
-            </button>
+            <div class="flex gap-2">
+                <button onclick="triggerPrintSummary()" class="flex-1 py-2.5 bg-sage-500 hover:bg-sage-600 text-white font-bold rounded-2xl text-xs transition-colors shadow-md">
+                    🖨️ Print Grocery List
+                </button>
+                <button onclick="toggleSavedPlanModal()" class="px-5 py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold rounded-2xl text-xs transition-colors">
+                    Close
+                </button>
+            </div>
         </div>
     </div>
 
@@ -243,19 +267,19 @@
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-2">
                     <span class="text-2xl">💬</span>
-                    <h3 class="font-extrabold text-stone-900 text-lg">Contact & Feedback</h3>
+                    <h3 class="font-extrabold text-stone-900 text-lg">Contact & Suggest a Food</h3>
                 </div>
                 <button onclick="toggleFeedbackModal()" class="text-stone-400 hover:text-stone-600 font-bold text-lg p-1">✕</button>
             </div>
 
             <p class="text-xs text-stone-600 leading-relaxed">
-                Have suggestions or recovery tips? Send us a direct note to help improve Re-Poopulate!
+                Have suggestions, missing foods, or recovery tips? Send us a direct note to help expand Re-Poopulate!
             </p>
 
             <form onsubmit="sendFeedback(event)" class="space-y-3">
                 <div>
-                    <label class="block text-[11px] font-bold uppercase text-stone-500 mb-1">Your Note</label>
-                    <textarea id="feedback-message" required rows="4" placeholder="Share your suggestions, missing foods, or feedback..." class="w-full p-3 border border-stone-200 rounded-xl text-xs focus:ring-2 focus:ring-sage-500 outline-none"></textarea>
+                    <label class="block text-[11px] font-bold uppercase text-stone-500 mb-1">Your Note / Food Suggestion</label>
+                    <textarea id="feedback-message" required rows="4" placeholder="Share your suggestions, missing foods, or recovery feedback..." class="w-full p-3 border border-stone-200 rounded-xl text-xs focus:ring-2 focus:ring-sage-500 outline-none"></textarea>
                 </div>
                 <div class="flex justify-end gap-2">
                     <button type="button" onclick="toggleFeedbackModal()" class="px-4 py-2 text-xs font-bold text-stone-500 hover:text-stone-800">Cancel</button>
@@ -317,6 +341,28 @@
             <button onclick="togglePwaModal()" class="w-full py-3 bg-sage-500 hover:bg-sage-600 text-white font-bold rounded-2xl text-sm transition-colors shadow-md shadow-sage-500/20">
                 Got it!
             </button>
+        </div>
+    </div>
+
+    <!-- Hidden Printable Discharge & Grocery Summary Container -->
+    <div id="print-summary-view" class="hidden p-8 max-w-2xl mx-auto space-y-6">
+        <div class="border-b pb-4 flex justify-between items-end">
+            <div>
+                <h1 class="text-2xl font-bold text-black">Re-Poopulate — Discharge Grocery Summary</h1>
+                <p id="print-track-title" class="text-sm text-gray-600 mt-1 font-semibold">Post-Colonoscopy Recovery Protocol</p>
+            </div>
+            <div class="text-right text-xs text-gray-400">
+                <p>getrepoopulate.com</p>
+                <p>Personalized Patient Guide</p>
+            </div>
+        </div>
+
+        <div id="print-content-area" class="space-y-6 text-sm">
+            <!-- Dynamic Print Content Injected via JavaScript -->
+        </div>
+
+        <div class="border-t pt-4 text-[10px] text-gray-500 leading-relaxed">
+            <p><strong>Discharge Note:</strong> This guide provides general grocery recommendations for gentle gastrointestinal recovery. Always adhere to your gastroenterologist or physician's specific post-procedure instructions.</p>
         </div>
     </div>
 
@@ -394,6 +440,17 @@
                                 glutenFree: true,
                                 summary: "Soothing plant-based broth rich in bioavailable minerals, potassium, and easy electrolytes.",
                                 science: "Gentle liquid extraction delivers key electrolytes (potassium, magnesium) and soluble glutamine without fat or fiber, ensuring zero GI mechanical stress."
+                            },
+                            {
+                                id: "col-d1-18",
+                                name: "Fennel Seed Tea (Steeped)",
+                                category: "Herbal Teas",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Warm steeped fennel tea calms post-procedure bloat and smooth muscle spasms.",
+                                science: "Anethole and fenchone volatile oils relax GI smooth muscle tissue and reduce trapped intestinal gas volume by inhibiting gas bubble formation."
                             },
                             {
                                 id: "col-d1-4",
@@ -568,6 +625,17 @@
                                 glutenFree: false,
                                 summary: "Easy energy starch paired with healthy olive oil to soothe the digestive tract.",
                                 science: "Monounsaturated fats in olive oil stimulate mild, healthy bile flow without triggering hyper-motility."
+                            },
+                            {
+                                id: "col-d2-10",
+                                name: "Golden Turmeric Rice Broth",
+                                category: "Soups & Spices",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Mild yellow rice broth spiced with a tiny pinch of ground turmeric to soothe tissue.",
+                                science: "Curcumin inhibits the NF-kB inflammatory signaling cascade in epithelial intestinal cells, downregulating pro-inflammatory cytokine production without requiring heavy biliary breakdown."
                             },
                             {
                                 id: "col-d2-2",
@@ -793,6 +861,17 @@
                                 science: "Traditional unpasteurized miso provides live probiotic strains and pre-digested amino acids; keeping temperatures under 115°F protects delicate bacterial enzymes from heat denaturation."
                             },
                             {
+                                id: "ab-p1-7",
+                                name: "Warm Chamomile & Lemon Balm Tea",
+                                category: "Herbal Teas",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Soothing herbal infusion that eases gut-brain anxiety and relaxes intestinal tension.",
+                                science: "Apigenin flavonoids bind to central GABA-A receptors to reduce stress-induced hyper-motility, while terpinoids exert localized antispasmodic effects on colonic smooth muscle."
+                            },
+                            {
                                 id: "ab-p1-6",
                                 name: "Steamed Cod or Halibut",
                                 category: "Lean Protein",
@@ -888,6 +967,28 @@
                                 glutenFree: true,
                                 summary: "Soft pumpkin delivers high soluble fiber and beta-carotene to repair damaged intestinal villi.",
                                 science: "Soluble pectin in pumpkin forms a protective gel matrix that slows transit time, while provitamin A acts as a cofactor in epithelial cell turnover."
+                            },
+                            {
+                                id: "ab-p2-7",
+                                name: "High-Protein Shiitake Mineral Broth",
+                                category: "Soups & Broths",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Deep savory plant broth infused with dried shiitake mushrooms for gentle immune support.",
+                                science: "Fungal beta-glucans (lentinan) interact with gut mucosal immune receptors (Dectin-1) to support mucosal secretory IgA production without provoking inflammatory distress."
+                            },
+                            {
+                                id: "ab-p2-8",
+                                name: "Cinnamon-Infused Warm Rice Water",
+                                category: "Spiced Drinks",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Strained warm rice water simmered with a touch of Ceylon cinnamon to stabilize digestion.",
+                                science: "Cinnamaldehyde exhibits mild natural antimicrobial selectivity against pathogenic yeasts while gelatinized rice starches absorb excess luminal fluids."
                             },
                             {
                                 id: "ab-p2-6",
@@ -1025,6 +1126,17 @@
                                 science: "Menthol in peppermint oil blocks voltage-gated calcium channels in intestinal smooth muscle cells, producing a localized antispasmodic effect."
                             },
                             {
+                                id: "fp-p1-7",
+                                name: "Marshmallow Root Infusion",
+                                category: "Herbal Teas",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Cold-steeped marshmallow root tea forms a soothing, slippery coat over raw stomach tissue.",
+                                science: "High concentrations of mucilaginous polysaccharides form a physical bio-adhesive protective film over irritated gastric mucosa, blunting acid contact."
+                            },
+                            {
                                 id: "fp-p1-2",
                                 name: "Ice Cream & Milk Desserts",
                                 category: "Dairy",
@@ -1122,6 +1234,17 @@
                                 science: "Finely ground gelatinized starch granules require minimal pancreatic amylase breakdown and pass smoothly over raw gastric mucosa."
                             },
                             {
+                                id: "fp-p2-7",
+                                name: "Steeped Cuminum & Coriander Decoction",
+                                category: "Spiced Drinks",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Lightly boiled cumin and coriander seed tea to settle residual digestive nausea.",
+                                science: "Cuminaldehyde and linalool stimulate mild digestive enzyme secretion (lipase and amylase) while suppressing smooth muscle spasms in the upper GI tract."
+                            },
+                            {
                                 id: "fp-p2-6",
                                 name: "Smooth Peanut or Almond Butter (1 tbsp)",
                                 category: "Healthy Fats",
@@ -1173,6 +1296,17 @@
                                 glutenFree: true,
                                 summary: "Reintroduce slowly. Peel apple skins if your stomach still feels delicate.",
                                 science: "Enzyme output is restored, but high insoluble skin fiber can still cause minor cramps if motility is irritable."
+                            },
+                            {
+                                id: "fp-p3-5",
+                                name: "Kombucha & Fermented Fizzy Tonics",
+                                category: "Beverages",
+                                rating: "Caution",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Hold off on carbonated kombucha until fully recovered; natural acids and fizz can sting residual raw spots.",
+                                science: "High acetic acid levels and active carbonation can irritate regenerating gastric mucosa and trigger unwanted belching and visceral hyper-sensitivity."
                             },
                             {
                                 id: "fp-p3-3",
@@ -1227,7 +1361,6 @@
             const listEl = document.getElementById('saved-foods-list');
             if (!listEl) return;
 
-            // Collect all food items across all tracks
             let allFoods = [];
             Object.values(TRACKS).forEach(t => {
                 t.phases.forEach(p => {
@@ -1373,10 +1506,13 @@
 
             if (foods.length === 0) {
                 foodGrid.innerHTML = `
-                    <div class="bg-white rounded-2xl p-6 text-center border border-stone-200 space-y-1">
-                        <p class="text-2xl">🔍</p>
+                    <div class="bg-white rounded-2xl p-6 text-center border border-stone-200 space-y-3">
+                        <p class="text-3xl">🔍</p>
                         <p class="font-bold text-stone-800 text-sm">No food recommendations found</p>
-                        <p class="text-xs text-stone-500">Try adjusting your search query or clearing your dietary filters.</p>
+                        <p class="text-xs text-stone-500 max-w-sm mx-auto">Try adjusting your search query, or request this food to be reviewed by our team!</p>
+                        <button onclick="toggleFeedbackModal()" class="mt-2 px-4 py-2 bg-sage-50 hover:bg-sage-100 border border-sage-200 text-sage-800 font-bold rounded-xl text-xs transition-colors">
+                            💡 Suggest this food to add
+                        </button>
                     </div>
                 `;
                 return;
@@ -1448,6 +1584,75 @@
             });
         }
 
+        // Printable Discharge Summary Generator
+        function triggerPrintSummary() {
+            const track = TRACKS[currentTrack];
+            document.getElementById('print-track-title').innerText = `${track.name} — ${track.subtitle}`;
+
+            const printContent = document.getElementById('print-content-area');
+            printContent.innerHTML = '';
+
+            // Section 1: Recommended Foods for Phase 1 & 2 Grocery List
+            const p1 = track.phases[0];
+            const p2 = track.phases[1];
+
+            const recPhase1 = p1.foods.filter(f => f.rating === 'Recommended');
+            const recPhase2 = p2 ? p2.foods.filter(f => f.rating === 'Recommended') : [];
+
+            let html = `
+                <div class="border rounded-xl p-4 bg-stone-50">
+                    <h3 class="font-bold text-base border-b pb-2 mb-3">🛒 Immediate Grocery Shopping List (Phases 1 & 2 Focus)</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <h4 class="font-bold text-xs text-green-800 uppercase tracking-wider mb-2">${p1.label}</h4>
+                            <ul class="list-disc list-inside space-y-1 text-xs text-gray-700">
+                                ${recPhase1.map(f => `<li><strong>${f.name}</strong> (${f.category})</li>`).join('')}
+                            </ul>
+                        </div>
+                        ${p2 ? `
+                        <div>
+                            <h4 class="font-bold text-xs text-green-800 uppercase tracking-wider mb-2">${p2.label}</h4>
+                            <ul class="list-disc list-inside space-y-1 text-xs text-gray-700">
+                                ${recPhase2.map(f => `<li><strong>${f.name}</strong> (${f.category})</li>`).join('')}
+                            </ul>
+                        </div>` : ''}
+                    </div>
+                </div>
+            `;
+
+            // Section 2: Items to Strictly Avoid Early On
+            const avoidFoods = p1.foods.filter(f => f.rating === 'Avoid');
+            if (avoidFoods.length > 0) {
+                html += `
+                    <div class="border border-red-200 rounded-xl p-4 bg-red-50/50">
+                        <h3 class="font-bold text-xs text-red-800 uppercase tracking-wider mb-2">🛑 Items to Avoid During Early Recovery</h3>
+                        <ul class="list-disc list-inside space-y-1 text-xs text-gray-700">
+                            ${avoidFoods.map(f => `<li><strong>${f.name}</strong> — ${f.summary}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            // Section 3: User's Bookmarked Foods
+            let allFoods = [];
+            Object.values(TRACKS).forEach(t => t.phases.forEach(p => allFoods = allFoods.concat(p.foods)));
+            const savedItems = allFoods.filter(f => savedFoods.includes(f.id));
+
+            if (savedItems.length > 0) {
+                html += `
+                    <div class="border rounded-xl p-4 bg-yellow-50/50">
+                        <h3 class="font-bold text-xs text-amber-800 uppercase tracking-wider mb-2">📌 Your Bookmarked Favorites</h3>
+                        <ul class="list-disc list-inside space-y-1 text-xs text-gray-700">
+                            ${savedItems.map(f => `<li><strong>${f.name}</strong> (${f.category})</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            printContent.innerHTML = html;
+            window.print();
+        }
+
         function toggleScience(id) {
             const panel = document.getElementById(`science-${id}`);
             const arrow = document.getElementById(`arrow-${id}`);
@@ -1490,7 +1695,7 @@
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('data:text/javascript,' + encodeURIComponent(`
-            const CACHE_NAME = 'repoopulate-v5';
+            const CACHE_NAME = 'repoopulate-v6';
             self.addEventListener('install', e => {
               e.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(['/'])));
             });
