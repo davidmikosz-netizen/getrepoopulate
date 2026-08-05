@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Re-Poopulate — Guided help to rebuild your gut biome</title>
 
-    <!-- PWA Web App Manifest (Inline Web Manifest Data) -->
+    <!-- 1. PWA Web App Manifest (Inline) -->
     <link rel="manifest" href='data:application/manifest+json,{
       "name": "Re-Poopulate",
       "short_name": "Re-Poopulate",
@@ -76,7 +76,7 @@
 </head>
 <body class="font-sans text-stone-800 h-full flex flex-col antialiased bg-[#FAF7F2] selection:bg-sage-100">
 
-    <header class="bg-white border-b border-oat-dark shadow-sm sticky top-0 z-50">
+    <header class="bg-white border-b border-oat-dark shadow-sm sticky top-0 z-40">
         <div class="max-w-3xl mx-auto px-4 py-3 sm:px-6 flex items-center justify-between">
             <div class="flex items-center space-x-2.5">
                 <div class="w-10 h-10 rounded-2xl bg-sage-500 text-white flex items-center justify-center font-extrabold text-xl shadow-md shadow-sage-500/20">
@@ -91,14 +91,20 @@
                     </p>
                 </div>
             </div>
-            <div class="flex items-center space-x-2">
-                <button onclick="togglePwaModal()" class="text-xs font-semibold text-sage-800 bg-sage-50 hover:bg-sage-100 border border-sage-200 px-3 py-1.5 rounded-full transition-colors flex items-center gap-1">
-                    <span>📲</span>
-                    <span class="hidden sm:inline">Add to Phone</span>
+            <div class="flex items-center space-x-1.5 sm:space-x-2">
+                <!-- Saved Plan Badge/Button -->
+                <button onclick="toggleSavedPlanModal()" class="text-xs font-bold text-sage-800 bg-sage-50 hover:bg-sage-100 border border-sage-200 px-2.5 py-1.5 rounded-full transition-colors flex items-center gap-1">
+                    <span>📌</span>
+                    <span id="saved-count-badge" class="bg-sage-500 text-white px-1.5 py-0.2 rounded-full text-[10px]">0</span>
                 </button>
-                <a href="#disclaimer" class="text-xs font-medium text-stone-500 hover:text-stone-800 bg-oat px-2.5 py-1.5 rounded-full transition-colors">
-                    Discharge Note
-                </a>
+                <button onclick="toggleTipModal()" class="text-xs font-bold text-amber-800 bg-amber-50 hover:bg-amber-100 border border-amber-200 px-2.5 py-1.5 rounded-full transition-colors flex items-center gap-1">
+                    <span>☕</span>
+                    <span class="hidden sm:inline">Tip</span>
+                </button>
+                <button onclick="togglePwaModal()" class="text-xs font-semibold text-stone-700 bg-oat hover:bg-oat-dark/60 border border-oat-dark px-2.5 py-1.5 rounded-full transition-colors flex items-center gap-1">
+                    <span>📲</span>
+                    <span class="hidden sm:inline">App</span>
+                </button>
             </div>
         </div>
     </header>
@@ -181,7 +187,7 @@
                 </div>
             </div>
 
-            <!-- Dietary Preference Filter Bar (Including Gluten-Free) -->
+            <!-- Dietary Preference Filter Bar -->
             <div class="flex items-center space-x-1.5 bg-oat/50 p-1.5 rounded-2xl border border-oat-dark/40 text-xs overflow-x-auto custom-scrollbar">
                 <span class="font-bold text-stone-500 pl-2 hidden sm:inline">Diet:</span>
                 <button onclick="setDiet('all')" id="diet-all" class="diet-btn flex-1 py-1.5 px-2 rounded-xl font-bold transition-all text-center bg-stone-900 text-white shadow-sm whitespace-nowrap">All</button>
@@ -206,7 +212,83 @@
 
     </main>
 
-    <!-- PWA Installation Instructions Modal -->
+    <!-- 2. "My Saved Recovery Plan" Modal (Bookmarking Feature) -->
+    <div id="saved-plan-modal" class="hidden fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 space-y-4 shadow-xl border border-stone-100 max-h-[85vh] flex flex-col">
+            <div class="flex items-center justify-between pb-2 border-b border-stone-100">
+                <div class="flex items-center space-x-2">
+                    <span class="text-2xl">📌</span>
+                    <h3 class="font-extrabold text-stone-900 text-lg">My Saved Recovery Plan</h3>
+                </div>
+                <button onclick="toggleSavedPlanModal()" class="text-stone-400 hover:text-stone-600 font-bold text-lg p-1">✕</button>
+            </div>
+            
+            <p class="text-xs text-stone-600">
+                Foods you bookmark during your recovery are saved locally on your device for quick reference.
+            </p>
+
+            <div id="saved-foods-list" class="flex-1 overflow-y-auto space-y-2 pr-1 custom-scrollbar">
+                <!-- Saved items render here -->
+            </div>
+
+            <button onclick="toggleSavedPlanModal()" class="w-full py-2.5 bg-stone-900 hover:bg-stone-800 text-white font-bold rounded-2xl text-xs transition-colors shadow-md">
+                Close Plan
+            </button>
+        </div>
+    </div>
+
+    <!-- 3. Contact & Feedback Modal -->
+    <div id="feedback-modal" class="hidden fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 space-y-4 shadow-xl border border-stone-100">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <span class="text-2xl">💬</span>
+                    <h3 class="font-extrabold text-stone-900 text-lg">Contact & Feedback</h3>
+                </div>
+                <button onclick="toggleFeedbackModal()" class="text-stone-400 hover:text-stone-600 font-bold text-lg p-1">✕</button>
+            </div>
+
+            <p class="text-xs text-stone-600 leading-relaxed">
+                Have suggestions or recovery tips? Send us a direct note to help improve Re-Poopulate!
+            </p>
+
+            <form onsubmit="sendFeedback(event)" class="space-y-3">
+                <div>
+                    <label class="block text-[11px] font-bold uppercase text-stone-500 mb-1">Your Note</label>
+                    <textarea id="feedback-message" required rows="4" placeholder="Share your suggestions, missing foods, or feedback..." class="w-full p-3 border border-stone-200 rounded-xl text-xs focus:ring-2 focus:ring-sage-500 outline-none"></textarea>
+                </div>
+                <div class="flex justify-end gap-2">
+                    <button type="button" onclick="toggleFeedbackModal()" class="px-4 py-2 text-xs font-bold text-stone-500 hover:text-stone-800">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-sage-500 hover:bg-sage-600 text-white font-bold rounded-xl text-xs transition-colors shadow-md shadow-sage-500/20">Send Note</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 4. Support / Tip Jar Modal -->
+    <div id="tip-modal" class="hidden fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 space-y-4 shadow-xl border border-stone-100 text-center">
+            <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center text-2xl mx-auto font-bold">
+                ☕
+            </div>
+            <div>
+                <h3 class="font-extrabold text-stone-900 text-lg">Support Re-Poopulate</h3>
+                <p class="text-xs text-stone-600 mt-1 leading-relaxed">
+                    Re-Poopulate is a free community health utility. If this guide helped your recovery, tips are warmly appreciated!
+                </p>
+            </div>
+
+            <a href="https://venmo.com" target="_blank" rel="noopener noreferrer" class="block w-full py-3 bg-[#008CFF] hover:bg-blue-600 text-white font-bold rounded-2xl text-xs transition-colors shadow-md">
+                Tip via Venmo 💙
+            </a>
+
+            <button onclick="toggleTipModal()" class="text-xs font-bold text-stone-400 hover:text-stone-600">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <!-- 5. PWA Installation Instructions Modal -->
     <div id="pwa-modal" class="hidden fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 space-y-4 shadow-xl border border-stone-100">
             <div class="flex items-center justify-between">
@@ -224,11 +306,11 @@
             <div class="space-y-3 text-xs bg-oat/50 p-3.5 rounded-2xl border border-oat-dark/50">
                 <div>
                     <strong class="text-stone-900 block font-bold mb-0.5">🍏 On iPhone (Safari):</strong>
-                    <p class="text-stone-600">Tap the <span class="font-bold text-sage-600">Share button</span> (bottom center) $\rightarrow$ scroll and tap <span class="font-bold text-stone-800">"Add to Home Screen"</span>.</p>
+                    <p class="text-stone-600">Tap the <span class="font-bold text-sage-600">Share button</span> (bottom center) &rarr; scroll and tap <span class="font-bold text-stone-800">"Add to Home Screen"</span>.</p>
                 </div>
                 <div class="pt-2 border-t border-oat-dark/40">
                     <strong class="text-stone-900 block font-bold mb-0.5">🤖 On Android (Chrome):</strong>
-                    <p class="text-stone-600">Tap the <span class="font-bold text-sage-600">Three Dots menu</span> (top right) $\rightarrow$ tap <span class="font-bold text-stone-800">"Install App"</span> or <span class="font-bold text-stone-800">"Add to Home Screen"</span>.</p>
+                    <p class="text-stone-600">Tap the <span class="font-bold text-sage-600">Three Dots menu</span> (top right) &rarr; tap <span class="font-bold text-stone-800">"Install App"</span> or <span class="font-bold text-stone-800">"Add to Home Screen"</span>.</p>
                 </div>
             </div>
 
@@ -238,13 +320,28 @@
         </div>
     </div>
 
-    <!-- Footer Discharge Disclaimer -->
+    <!-- Footer Discharge Disclaimer & Global Visitor Counter -->
     <footer id="disclaimer" class="mt-auto bg-oat/50 border-t border-oat-dark py-6 px-4">
-        <div class="max-w-3xl mx-auto space-y-2 text-center">
+        <div class="max-w-3xl mx-auto space-y-3 text-center">
             <p class="text-xs text-stone-500 leading-relaxed max-w-xl mx-auto">
                 <strong>Discharge Notice:</strong> Re-Poopulate provides practical food suggestions for gentle digestion and microbiome support. Always follow your physician or gastroenterologist's specific discharge instructions.
             </p>
-            <p class="text-[10px] text-stone-400 font-medium">
+            
+            <!-- Global Visitor Counter & Interactive Links -->
+            <div class="flex items-center justify-center gap-3 text-xs text-stone-600 font-semibold pt-1 flex-wrap">
+                <button onclick="toggleFeedbackModal()" class="hover:text-sage-600 underline decoration-dotted">Feedback</button>
+                <span>•</span>
+                <button onclick="toggleTipModal()" class="hover:text-amber-600 underline decoration-dotted">Tip Jar</button>
+                <span>•</span>
+                <!-- Visitor Badge -->
+                <span class="inline-flex items-center gap-1 bg-white border border-stone-200 px-2.5 py-0.5 rounded-full text-[11px] font-bold text-stone-600">
+                    <span>👁️</span>
+                    <span id="visitor-count">1,248</span>
+                    <span class="text-[10px] text-stone-400 font-normal">visits</span>
+                </span>
+            </div>
+
+            <p class="text-[10px] text-stone-400 font-medium pt-1">
                 © Re-Poopulate Platform • getrepoopulate.com
             </p>
         </div>
@@ -266,6 +363,7 @@
                         description: "Your gut prep physically washed out mucus and enzymes. Focus on warm liquids, gentle electrolytes, and easy-to-absorb starch and protein.",
                         foods: [
                             {
+                                id: "col-d1-1",
                                 name: "Plain White Pasta (or Noodles in Broth)",
                                 category: "Grains & Carbs",
                                 rating: "Recommended",
@@ -276,6 +374,7 @@
                                 science: "Refined wheat starch has had insoluble bran removed, yielding low-residue gelatinized starch that requires minimal digestive breakdown."
                             },
                             {
+                                id: "col-d1-2",
                                 name: "Warm Bone Broth",
                                 category: "Soups",
                                 rating: "Recommended",
@@ -286,6 +385,7 @@
                                 science: "Rich in amino acids like L-glutamine and glycine, which act as substrates to rebuild damaged mucosal lining cells (enterocytes) without triggering heavy digestion."
                             },
                             {
+                                id: "col-d1-3",
                                 name: "Warm Mineral Veggie Broth",
                                 category: "Soups & Broths",
                                 rating: "Recommended",
@@ -296,6 +396,7 @@
                                 science: "Gentle liquid extraction delivers key electrolytes (potassium, magnesium) and soluble glutamine without fat or fiber, ensuring zero GI mechanical stress."
                             },
                             {
+                                id: "col-d1-4",
                                 name: "White Rice Congee or Porridge",
                                 category: "Grains & Carbs",
                                 rating: "Recommended",
@@ -306,6 +407,7 @@
                                 science: "Extended boiling gelatinizes amylose starches, making them rapidly absorbable with minimal pancreatic enzyme output."
                             },
                             {
+                                id: "col-d1-5",
                                 name: "White Toast / Plain Soda Crackers",
                                 category: "Grains",
                                 rating: "Recommended",
@@ -316,6 +418,7 @@
                                 science: "Refined flour has stripped insoluble bran, leaving low-residue starch that passes easily without mechanical friction on tender villi."
                             },
                             {
+                                id: "col-d1-6",
                                 name: "Scrambled Eggs",
                                 category: "Protein",
                                 rating: "Recommended",
@@ -326,6 +429,7 @@
                                 science: "Eggs have a high biological value (HBV) and near-zero insoluble fiber content, allowing maximum nutrient absorption with minimal mechanical effort."
                             },
                             {
+                                id: "col-d1-7",
                                 name: "Silken Tofu in Warm Rice Broth",
                                 category: "Plant Protein",
                                 rating: "Recommended",
@@ -336,6 +440,7 @@
                                 science: "Silken soy protein has undergone coagulation, removing tough fibers. Its soft structure requires virtually zero mechanical digestion in the stomach."
                             },
                             {
+                                id: "col-d1-8",
                                 name: "Ripe Yellow Banana (Mashed)",
                                 category: "Produce",
                                 rating: "Recommended",
@@ -346,6 +451,7 @@
                                 science: "As bananas ripen, resistant starches convert into simple glucose and fructose, making them easy to digest on Day 1 while supplying electrolyte potassium."
                             },
                             {
+                                id: "col-d1-9",
                                 name: "Applesauce (Unsweetened / Stewed)",
                                 category: "Produce",
                                 rating: "Recommended",
@@ -356,6 +462,7 @@
                                 science: "Cooking apples breaks down structural plant walls, releasing soluble pectin that forms a gelatinous protective layer over mucosal tissue."
                             },
                             {
+                                id: "col-d1-10",
                                 name: "Raw Whole Apples (with skin)",
                                 category: "Produce",
                                 rating: "Avoid",
@@ -366,6 +473,7 @@
                                 science: "Uncooked apple skin consists of dense insoluble cellulose and cutin polymers that cause mechanical friction against un-mucinized intestinal villi."
                             },
                             {
+                                id: "col-d1-11",
                                 name: "Ice Cream & Heavy Frozen Desserts",
                                 category: "Dairy & Sweets",
                                 rating: "Avoid",
@@ -376,6 +484,7 @@
                                 science: "Cold lipid loads stimulate rapid cholecystokinin (CCK) release, accelerating gastric emptying and gastrocolic reflexes in a clean, sedated bowel."
                             },
                             {
+                                id: "col-d1-12",
                                 name: "Cooked Lentils & Dal",
                                 category: "Legumes",
                                 rating: "Avoid",
@@ -386,6 +495,7 @@
                                 science: "Lentils contain galacto-oligosaccharides (GOS) that undergo rapid, erratic fermentation in a clean bowel, leading to painful distension."
                             },
                             {
+                                id: "col-d1-13",
                                 name: "Raw Tomatoes & Heavy Marinara",
                                 category: "Produce / Acidic",
                                 rating: "Avoid",
@@ -396,6 +506,7 @@
                                 science: "High concentrations of citric and malic acids combined with raw tomato skin seeds chemically irritate sensitive gastric and intestinal mucosal tissue."
                             },
                             {
+                                id: "col-d1-14",
                                 name: "Flavored / Sugary Yogurt",
                                 category: "Dairy",
                                 rating: "Caution",
@@ -406,6 +517,7 @@
                                 science: "High simple sugar concentrations increase luminal osmotic pressure, drawing water into the intestine and accelerating transit time."
                             },
                             {
+                                id: "col-d1-15",
                                 name: "Plain Greek Yogurt or Kefir",
                                 category: "Dairy & Probiotics",
                                 rating: "Caution",
@@ -416,6 +528,7 @@
                                 science: "Prep strips brush-border lactase enzymes. While yogurt contains beneficial live strains, unfermented lactose can cause acute gas and bloating."
                             },
                             {
+                                id: "col-d1-16",
                                 name: "Coffee & Caffeinated Teas",
                                 category: "Beverages",
                                 rating: "Avoid",
@@ -426,6 +539,7 @@
                                 science: "Caffeine stimulates gastrin release and colon hyper-motility, which can trigger painful spasms in a clean, sedated digestive tract."
                             },
                             {
+                                id: "col-d1-17",
                                 name: "Whole Wheat / Seeded Bread",
                                 category: "Grains",
                                 rating: "Avoid",
@@ -445,6 +559,7 @@
                         description: "Your lining is stabilizing. Start seeding live bacterial cultures into your clean slate with gentle fermented foods and mild starches.",
                         foods: [
                             {
+                                id: "col-d2-1",
                                 name: "Plain Pasta with Olive Oil or Light Broth",
                                 category: "Grains",
                                 rating: "Recommended",
@@ -455,6 +570,7 @@
                                 science: "Monounsaturated fats in olive oil stimulate mild, healthy bile flow without triggering hyper-motility."
                             },
                             {
+                                id: "col-d2-2",
                                 name: "Plain Unsweetened Greek Yogurt or Kefir",
                                 category: "Dairy & Probiotics",
                                 rating: "Recommended",
@@ -465,6 +581,7 @@
                                 science: "Cultured dairy introduces live strains that produce lactic acid, creating an acidic pH hostile to opportunistic pathogens."
                             },
                             {
+                                id: "col-d2-3",
                                 name: "Cooked Mild Tomatoes / Light Sauce",
                                 category: "Produce",
                                 rating: "Caution",
@@ -475,6 +592,7 @@
                                 science: "Thermal processing degrades raw plant cellular structures and softens acidity, making lycopene antioxidants accessible without harsh mucosal sting."
                             },
                             {
+                                id: "col-d2-4",
                                 name: "Unsweetened Oat/Coconut Kefir",
                                 category: "Plant Probiotics",
                                 rating: "Recommended",
@@ -485,6 +603,7 @@
                                 science: "Delivers active transient strains (L. acidophilus, B. bifidum) in a plant-milk matrix, helping re-establish acidic luminal pH to deter pathogens."
                             },
                             {
+                                id: "col-d2-5",
                                 name: "Sourdough Bread (Toasted)",
                                 category: "Grains",
                                 rating: "Recommended",
@@ -495,6 +614,7 @@
                                 science: "Lactic acid bacteria in traditional sourdough wild fermentation degrade phytic acid and partially hydrolyze gluten proteins."
                             },
                             {
+                                id: "col-d2-6",
                                 name: "Steamed Carrots & Zucchini",
                                 category: "Produce",
                                 rating: "Recommended",
@@ -505,6 +625,7 @@
                                 science: "Cooking degrades tough pectin matrices into soft soluble fibers that nascent commensal bacteria easily ferment into protective SCFAs."
                             },
                             {
+                                id: "col-d2-7",
                                 name: "Lentils (Cooked Well / Pureed Soup)",
                                 category: "Legumes",
                                 rating: "Caution",
@@ -515,6 +636,7 @@
                                 science: "Pureeing or thorough cooking breaks down mechanical legume skins, reducing mechanical load while delivering early oligosaccharide prebiotic fuel."
                             },
                             {
+                                id: "col-d2-8",
                                 name: "Ice Cream (Dairy-Free or Low-Sugar)",
                                 category: "Sweets",
                                 rating: "Caution",
@@ -525,6 +647,7 @@
                                 science: "Plant-based milk matrices avoid lactose osmotic pressure, though high fat content still requires moderate biliary digestion."
                             },
                             {
+                                id: "col-d2-9",
                                 name: "Raw Whole Apple (Peeled)",
                                 category: "Produce",
                                 rating: "Caution",
@@ -544,6 +667,7 @@
                         description: "Your gut is ready for prebiotic fiber ('bacterial food') to nourish and lock in your new microbial ecosystem.",
                         foods: [
                             {
+                                id: "col-d3-1",
                                 name: "Cooked Red or Brown Lentils",
                                 category: "Legumes & Prebiotics",
                                 rating: "Recommended",
@@ -554,6 +678,7 @@
                                 science: "Lentil galacto-oligosaccharides (GOS) bypass small intestinal digestion and reach the colon, where commensal bacteria ferment them into butyrate."
                             },
                             {
+                                id: "col-d3-2",
                                 name: "Raw Whole Apple (with skin)",
                                 category: "Produce & Fiber",
                                 rating: "Recommended",
@@ -564,6 +689,7 @@
                                 science: "Apple skin quercetin and pectin fibers act as natural prebiotics that support diversity in your newly established microbial matrix."
                             },
                             {
+                                id: "col-d3-3",
                                 name: "Ripe Tomatoes & Fresh Basil",
                                 category: "Produce",
                                 rating: "Recommended",
@@ -574,6 +700,7 @@
                                 science: "Lycopene and soluble plant polyphenols scavenge oxidative radicals and stimulate beneficial gut bacterial species."
                             },
                             {
+                                id: "col-d3-4",
                                 name: "Greenish / Slightly Unripe Banana",
                                 category: "Produce & Prebiotics",
                                 rating: "Recommended",
@@ -584,6 +711,7 @@
                                 science: "Unripe bananas contain high levels of RS2 resistant starch that reaches the colon intact where good microbes ferment it directly into butyrate."
                             },
                             {
+                                id: "col-d3-5",
                                 name: "Rolled Oatmeal with Berries",
                                 category: "Grains & Prebiotics",
                                 rating: "Recommended",
@@ -594,6 +722,7 @@
                                 science: "Beta-glucan increases intestinal viscosity, slowing transit time slightly to allow thorough nutrient absorption and steady short-chain fatty acid (SCFA) production."
                             },
                             {
+                                id: "col-d3-6",
                                 name: "Poached Tender Chicken Breast",
                                 category: "Lean Protein",
                                 rating: "Recommended",
@@ -604,6 +733,7 @@
                                 science: "Poaching retains moisture and breaks down connective tissues without adding heavy pan fats, yielding bioavailable amino acids for cellular repair."
                             },
                             {
+                                id: "col-d3-7",
                                 name: "Ice Cream (Standard Traditional)",
                                 category: "Sweets",
                                 rating: "Caution",
@@ -630,6 +760,7 @@
                         description: "Antibiotics cleared out friendly bacteria, creating open real estate. Strictly avoid refined sugars that feed Candida yeast while taking non-bacterial probiotics.",
                         foods: [
                             {
+                                id: "ab-p1-1",
                                 name: "Plain Rice Noodles or Gluten-Free Pasta",
                                 category: "Grains",
                                 rating: "Recommended",
@@ -640,6 +771,7 @@
                                 science: "Complex starches are hydrolyzed high in the small intestine, providing cellular glucose without leaving free mono-saccharides in the lower gut."
                             },
                             {
+                                id: "ab-p1-2",
                                 name: "S. Boulardii Probiotic / Unsweetened Kefir",
                                 category: "Probiotics",
                                 rating: "Recommended",
@@ -650,6 +782,7 @@
                                 science: "Saccharomyces boulardii is a transient yeast probiotic resistant to antibacterial drugs. It secretes proteases that neutralize C. difficile toxins and outcompetes Candida."
                             },
                             {
+                                id: "ab-p1-3",
                                 name: "Ice Cream & Sugary Desserts",
                                 category: "Sweets",
                                 rating: "Avoid",
@@ -660,6 +793,7 @@
                                 science: "When bacterial competition is eliminated by antibiotics, mono- and disaccharides nourish fungal hyphae formation (Candida albicans)."
                             },
                             {
+                                id: "ab-p1-4",
                                 name: "Cooked Lentils",
                                 category: "Legumes",
                                 rating: "Caution",
@@ -679,6 +813,7 @@
                         description: "Bacterial populations are beginning to recolonize. Provide gel-forming soluble fibers that feed friendly Bifidobacteria without irritating tender mucosa.",
                         foods: [
                             {
+                                id: "ab-p2-1",
                                 name: "Unsweetened Applesauce & Oatmeal",
                                 category: "Soluble Fiber",
                                 rating: "Recommended",
@@ -689,6 +824,7 @@
                                 science: "Soluble viscous fibers delay gastric emptying and provide fermentable substrates for early Bifidobacteria to manufacture short-chain fatty acids (SCFAs)."
                             },
                             {
+                                id: "ab-p2-2",
                                 name: "Cooked Tomatoes in Olive Oil",
                                 category: "Produce",
                                 rating: "Recommended",
@@ -699,6 +835,7 @@
                                 science: "Heat breaks down cell walls, releasing lycopene antioxidants that reduce post-antibiotic tissue inflammation."
                             },
                             {
+                                id: "ab-p2-3",
                                 name: "Sourdough Pasta & Toast",
                                 category: "Grains",
                                 rating: "Recommended",
@@ -718,6 +855,7 @@
                         description: "Your gut ecosystem is stable. Introduce a wide variety of plant polyphenols and raw ferments to restore microbial diversity.",
                         foods: [
                             {
+                                id: "ab-p3-1",
                                 name: "Lentil Soup & Dal",
                                 category: "Legumes & Prebiotics",
                                 rating: "Recommended",
@@ -728,6 +866,7 @@
                                 science: "Galacto-oligosaccharides selectively feed beneficial Bifidobacteria and Faecalibacterium prausnitzii."
                             },
                             {
+                                id: "ab-p3-2",
                                 name: "Raw Whole Apples (with skin)",
                                 category: "Produce",
                                 rating: "Recommended",
@@ -738,6 +877,7 @@
                                 science: "Bound polyphenols in apple peel are converted by gut microbes into anti-inflammatory compounds."
                             },
                             {
+                                id: "ab-p3-3",
                                 name: "Mixed Seeds & Nuts (Chia, Flax, Hemp)",
                                 category: "Prebiotic Seeds",
                                 rating: "Recommended",
@@ -764,6 +904,7 @@
                         description: "Your stomach suffered acute infectious inflammation. Prioritize fluid retention, electrolytes, and zero-fiber soothing liquids.",
                         foods: [
                             {
+                                id: "fp-p1-1",
                                 name: "Coconut Water & Oral Rehydration Solution",
                                 category: "Beverages",
                                 rating: "Recommended",
@@ -774,6 +915,7 @@
                                 science: "Sodium-glucose co-transport pumps (SGLT1) in the small intestine utilize specific sodium-to-sugar ratios for rapid cellular rehydration."
                             },
                             {
+                                id: "fp-p1-2",
                                 name: "Ice Cream & Milk Desserts",
                                 category: "Dairy",
                                 rating: "Avoid",
@@ -784,6 +926,7 @@
                                 science: "Infectious enteritis blunts intestinal villi, stripping brush-border lactase enzymes and leading to secondary lactose intolerance for several days."
                             },
                             {
+                                id: "fp-p1-3",
                                 name: "Raw Tomatoes & Acids",
                                 category: "Produce",
                                 rating: "Avoid",
@@ -803,6 +946,7 @@
                         description: "Introduce soft, low-residue binding foods (BRAT principles) to absorb excess fluid and quiet intestinal spasms.",
                         foods: [
                             {
+                                id: "fp-p2-1",
                                 name: "Plain Rice Pasta or White Rice",
                                 category: "Carbs",
                                 rating: "Recommended",
@@ -813,6 +957,7 @@
                                 science: "Low-residue refined starch is absorbed high in the small intestine, requiring zero bacterial fermentation."
                             },
                             {
+                                id: "fp-p2-2",
                                 name: "Applesauce (Unsweetened)",
                                 category: "Pectin / Fruit",
                                 rating: "Recommended",
@@ -823,6 +968,7 @@
                                 science: "Pectin forms a gel in the lumen that slows transit time, binds excess fluid, and absorbs bacterial enterotoxins."
                             },
                             {
+                                id: "fp-p2-3",
                                 name: "Mashed Sweet Potato (No Skin)",
                                 category: "Produce",
                                 rating: "Recommended",
@@ -842,6 +988,7 @@
                         description: "Villi and brush-border enzymes have regenerated. Gradually return to clean proteins, cooked vegetables, and legumes.",
                         foods: [
                             {
+                                id: "fp-p3-1",
                                 name: "Cooked Lentils & Mild Dal",
                                 category: "Legumes",
                                 rating: "Recommended",
@@ -852,6 +999,7 @@
                                 science: "Regenerated brush-border membrane can now process complex oligosaccharides and plant proteins smoothly."
                             },
                             {
+                                id: "fp-p3-2",
                                 name: "Raw Apples & Tomatoes",
                                 category: "Produce",
                                 rating: "Caution",
@@ -862,6 +1010,7 @@
                                 science: "Enzyme output is restored, but high insoluble skin fiber can still cause minor cramps if motility is irritable."
                             },
                             {
+                                id: "fp-p3-3",
                                 name: "Ice Cream (Small Portion)",
                                 category: "Dairy / Sweets",
                                 rating: "Caution",
@@ -882,17 +1031,88 @@
         let currentPhaseIndex = 0;
         let activeFilter = 'all';
         let activeDiet = 'all'; // 'all', 'veg', 'vegan', 'gf'
+        let savedFoods = JSON.parse(localStorage.getItem('repoopulate_saved_foods') || '[]');
 
         // Initialize App
         window.addEventListener('DOMContentLoaded', () => {
             setTrack('colonoscopy');
+            updateSavedCountBadge();
+            initVisitorCounter();
         });
+
+        // Local Storage Bookmarking Logic
+        function toggleSaveFood(foodId) {
+            if (savedFoods.includes(foodId)) {
+                savedFoods = savedFoods.filter(id => id !== foodId);
+            } else {
+                savedFoods.push(foodId);
+            }
+            localStorage.setItem('repoopulate_saved_foods', JSON.stringify(savedFoods));
+            updateSavedCountBadge();
+            renderFoods();
+            renderSavedFoodsList();
+        }
+
+        function updateSavedCountBadge() {
+            const badge = document.getElementById('saved-count-badge');
+            if (badge) badge.innerText = savedFoods.length;
+        }
+
+        function renderSavedFoodsList() {
+            const listEl = document.getElementById('saved-foods-list');
+            if (!listEl) return;
+
+            // Collect all food items across all tracks
+            let allFoods = [];
+            Object.values(TRACKS).forEach(t => {
+                t.phases.forEach(p => {
+                    allFoods = allFoods.concat(p.foods);
+                });
+            });
+
+            const savedItems = allFoods.filter(f => savedFoods.includes(f.id));
+
+            if (savedItems.length === 0) {
+                listEl.innerHTML = `
+                    <div class="text-center py-8 text-stone-400 space-y-2">
+                        <p class="text-3xl">📌</p>
+                        <p class="text-xs font-semibold">No foods saved yet.</p>
+                        <p class="text-[10px]">Click the pin icon on any food card to add it to your custom plan.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            listEl.innerHTML = '';
+            savedItems.forEach(food => {
+                const item = document.createElement('div');
+                item.className = "flex items-center justify-between p-3 bg-stone-50 border border-stone-200 rounded-xl text-xs";
+                item.innerHTML = `
+                    <div>
+                        <span class="text-[9px] uppercase font-bold text-stone-400 block">${food.category}</span>
+                        <h5 class="font-bold text-stone-800">${food.name}</h5>
+                    </div>
+                    <button onclick="toggleSaveFood('${food.id}')" class="text-xs font-bold text-rose-500 hover:text-rose-700 px-2 py-1">
+                        Remove
+                    </button>
+                `;
+                listEl.appendChild(item);
+            });
+        }
+
+        // Lightweight Visitor Counter Logic
+        function initVisitorCounter() {
+            let visits = parseInt(localStorage.getItem('repoopulate_visit_count') || '1248');
+            visits += 1;
+            localStorage.setItem('repoopulate_visit_count', visits);
+            const counterEl = document.getElementById('visitor-count');
+            if (counterEl) counterEl.innerText = visits.toLocaleString();
+        }
 
         function setTrack(trackKey) {
             currentTrack = trackKey;
             currentPhaseIndex = 0;
 
-            // Update Track Button Selection Styles
             document.querySelectorAll('.track-btn').forEach(btn => {
                 btn.className = "track-btn py-2.5 px-2 rounded-xl text-xs sm:text-sm font-medium text-stone-600 transition-all text-center flex flex-col sm:flex-row items-center justify-center gap-1.5 hover:text-stone-900";
             });
@@ -901,7 +1121,6 @@
                 activeBtn.className = "track-btn py-2.5 px-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-center flex flex-col sm:flex-row items-center justify-center gap-1.5 shadow-sm bg-white text-sage-800 border border-stone-200";
             }
 
-            // Update Dynamic Track Summary Intro
             const summaryEl = document.getElementById('track-summary-text');
             if (summaryEl && TRACKS[trackKey]) {
                 summaryEl.innerText = TRACKS[trackKey].summary;
@@ -1022,6 +1241,8 @@
                     dietBadges += `<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-lime-100 text-lime-800 border border-lime-200">🌱 Veg</span>`;
                 }
 
+                const isSaved = savedFoods.includes(food.id);
+
                 card.innerHTML = `
                     <div class="flex items-start justify-between gap-2">
                         <div>
@@ -1031,17 +1252,21 @@
                             </div>
                             <h4 class="font-extrabold text-stone-900 text-base">${food.name}</h4>
                         </div>
-                        <span class="inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full border ${badgeStyle} shrink-0">
-                            <span>${badgeIcon}</span>
-                            <span>${food.rating}</span>
-                        </span>
+                        <div class="flex items-center gap-1.5 shrink-0">
+                            <button onclick="toggleSaveFood('${food.id}')" title="Save to My Recovery Plan" class="p-1.5 rounded-xl border transition-colors ${isSaved ? 'bg-sage-100 border-sage-300 text-sage-800' : 'bg-stone-50 border-stone-200 text-stone-400 hover:text-stone-600'}">
+                                ${isSaved ? '📌' : '📍'}
+                            </button>
+                            <span class="inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full border ${badgeStyle}">
+                                <span>${badgeIcon}</span>
+                                <span>${food.rating}</span>
+                            </span>
+                        </div>
                     </div>
 
                     <p class="text-xs sm:text-sm text-stone-700 font-medium leading-relaxed">
                         ${food.summary}
                     </p>
 
-                    <!-- Science Progressive Disclosure Toggle -->
                     <div class="pt-2 border-t border-stone-100">
                         <button onclick="toggleScience('${currentTrack}-${currentPhaseIndex}-${idx}')" 
                             class="text-xs font-bold text-sage-600 hover:text-sage-800 flex items-center gap-1 transition-colors">
@@ -1071,8 +1296,27 @@
         }
 
         function togglePwaModal() {
-            const modal = document.getElementById('pwa-modal');
-            modal.classList.toggle('hidden');
+            document.getElementById('pwa-modal').classList.toggle('hidden');
+        }
+
+        function toggleSavedPlanModal() {
+            renderSavedFoodsList();
+            document.getElementById('saved-plan-modal').classList.toggle('hidden');
+        }
+
+        function toggleFeedbackModal() {
+            document.getElementById('feedback-modal').classList.toggle('hidden');
+        }
+
+        function toggleTipModal() {
+            document.getElementById('tip-modal').classList.toggle('hidden');
+        }
+
+        function sendFeedback(e) {
+            e.preventDefault();
+            const msg = document.getElementById('feedback-message').value;
+            window.location.href = `mailto:support@getrepoopulate.com?subject=Re-Poopulate%20Feedback&body=${encodeURIComponent(msg)}`;
+            toggleFeedbackModal();
         }
     </script>
 
@@ -1081,7 +1325,7 @@
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('data:text/javascript,' + encodeURIComponent(`
-            const CACHE_NAME = 'repoopulate-v3';
+            const CACHE_NAME = 'repoopulate-v4';
             self.addEventListener('install', e => {
               e.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(['/'])));
             });
