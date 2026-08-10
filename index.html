@@ -128,10 +128,24 @@
         </div>
     </header>
 
-    <section class="bg-oat/60 border-b border-oat-dark/50 py-3.5 px-4 text-center">
-        <p class="max-w-2xl mx-auto text-xs sm:text-sm text-stone-600 font-medium leading-relaxed">
-            “The practical guide on what to eat to rebuild a healthy gut biome after a <strong class="text-stone-900">colonoscopy</strong>, <strong class="text-stone-900">antibiotics</strong>, or <strong class="text-stone-900">food poisoning</strong>.”
-        </p>
+    <!-- Section 1: Presentation & Hook Banner -->
+    <section class="bg-gradient-to-b from-sage-500 to-sage-600 text-white py-6 px-4 shadow-inner">
+        <div class="max-w-2xl mx-auto text-center space-y-3">
+            <h2 class="text-lg sm:text-xl font-extrabold tracking-tight flex items-center justify-center gap-2">
+                <span>🌱</span>
+                <span>Why your gut biome needs your help!</span>
+            </h2>
+            <p class="text-xs sm:text-sm text-sage-100 font-medium leading-relaxed max-w-xl mx-auto">
+                “The practical guide on what to eat to rebuild a healthy gut biome after a <strong class="text-white underline decoration-sage-300">colonoscopy</strong>, <strong class="text-white underline decoration-sage-300">antibiotics</strong>, or <strong class="text-white underline decoration-sage-300">food poisoning</strong>.”
+            </p>
+            <div class="pt-1">
+                <a href="presentation.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white text-sage-800 hover:bg-sage-50 font-extrabold text-xs sm:text-sm px-5 py-2.5 rounded-2xl transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
+                    <span>📊</span>
+                    <span>Explore the Interactive Science Deck</span>
+                    <span class="text-xs text-sage-500">→</span>
+                </a>
+            </div>
+        </div>
     </section>
 
     <!-- Main App Container -->
@@ -380,10 +394,11 @@
                 <button onclick="toggleTipModal()" class="hover:text-amber-600 underline decoration-dotted">Tip Jar</button>
                 <span>•</span>
                 <!-- Visitor Badge -->
-                <span class="inline-flex items-center gap-1 bg-white border border-stone-200 px-2.5 py-0.5 rounded-full text-[11px] font-bold text-stone-600">
+                <span class="inline-flex items-center gap-1.5 bg-white border border-stone-200 px-3 py-1 rounded-full text-[11px] font-bold text-stone-700 shadow-sm">
                     <span>👁️</span>
                     <span id="visitor-count">1,248</span>
-                    <span class="text-[10px] text-stone-400 font-normal">visits</span>
+                    <span class="text-[10px] text-stone-400 font-normal">views</span>
+                    <span id="unique-visitor-tag" class="hidden text-[9px] bg-sage-100 text-sage-800 px-1.5 py-0.2 rounded-full font-bold">New Visitor</span>
                 </span>
             </div>
 
@@ -1398,13 +1413,36 @@
             });
         }
 
-        // Lightweight Visitor Counter Logic
+        // Improved Dual-Tracking Visitor Counter Logic
         function initVisitorCounter() {
-            let visits = parseInt(localStorage.getItem('repoopulate_visit_count') || '1248');
-            visits += 1;
-            localStorage.setItem('repoopulate_visit_count', visits);
+            const BASE_OFFSET = 1248; // Historical baseline starting point
+            
+            // 1. Session & Pageview Tracking
+            let totalViews = parseInt(localStorage.getItem('repoopulate_total_views') || '0');
+            totalViews += 1;
+            localStorage.setItem('repoopulate_total_views', totalViews.toString());
+
+            // 2. Unique Visitor Device Detection
+            let isNewVisitor = false;
+            if (!localStorage.getItem('repoopulate_visitor_has_visited')) {
+                localStorage.setItem('repoopulate_visitor_has_visited', 'true');
+                localStorage.setItem('repoopulate_first_visit_timestamp', new Date().toISOString());
+                isNewVisitor = true;
+            }
+
+            // Calculate total displayed count
+            const displayCount = BASE_OFFSET + totalViews;
+
+            // Render to DOM
             const counterEl = document.getElementById('visitor-count');
-            if (counterEl) counterEl.innerText = visits.toLocaleString();
+            if (counterEl) {
+                counterEl.innerText = displayCount.toLocaleString();
+            }
+
+            const tagEl = document.getElementById('unique-visitor-tag');
+            if (tagEl && isNewVisitor) {
+                tagEl.classList.remove('hidden');
+            }
         }
 
         function setTrack(trackKey) {
