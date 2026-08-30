@@ -104,6 +104,23 @@
 </head>
 <body class="font-sans text-stone-800 h-full flex flex-col antialiased bg-[#FAF7F2] selection:bg-sage-100">
 
+    <!-- Anthology Corridor II Quick Navigation Bar -->
+    <div class="bg-stone-900 text-stone-300 text-xs py-2 px-4 border-b border-stone-800">
+        <div class="max-w-3xl mx-auto flex items-center justify-between flex-wrap gap-2">
+            <a href="https://fallow.garden" class="font-bold text-white hover:text-emerald-400 transition-colors flex items-center gap-1.5">
+                <span>🌿</span> <span>fallow.garden Anthology</span>
+            </a>
+            <div class="flex items-center gap-3 text-[11px] text-stone-400 flex-wrap">
+                <span class="text-stone-500 hidden sm:inline">Corridor II Utilities:</span>
+                <a href="https://fallow.garden/episodes/multitude/index.html" class="hover:text-white transition-colors">The Multitudes Within</a>
+                <span>•</span>
+                <a href="https://fallow.garden/episodes/inner-meadow/index.html" class="hover:text-white transition-colors">The Inner Meadow</a>
+                <span>•</span>
+                <a href="https://fallow.garden/episodes/fastcounter/index.html" class="hover:text-white transition-colors">Gut Counter</a>
+            </div>
+        </div>
+    </div>
+
     <header class="bg-white border-b border-oat-dark shadow-sm sticky top-0 z-40">
         <div class="max-w-3xl mx-auto px-4 py-3 sm:px-6 flex items-center justify-between">
             <div class="flex items-center space-x-2.5">
@@ -396,7 +413,14 @@
 
     <!-- Footer Discharge Disclaimer & Global Visitor Counter -->
     <footer id="disclaimer" class="mt-auto bg-oat/50 border-t border-oat-dark py-6 px-4">
-        <div class="max-w-3xl mx-auto space-y-3 text-center">
+        <div class="max-w-3xl mx-auto space-y-4 text-center">
+            
+            <!-- Corridor II Anthology Callout -->
+            <div class="bg-white/60 border border-stone-200/80 rounded-2xl p-3 max-w-md mx-auto text-xs text-stone-600 space-y-1">
+                <p class="font-semibold text-stone-900">🌿 Part of the fallow.garden Anthology</p>
+                <p class="text-[11px] text-stone-500">Explore companion biological utilities: <a href="https://fallow.garden/episodes/multitude/index.html" class="underline hover:text-stone-900">The Multitudes Within</a> • <a href="https://fallow.garden/episodes/inner-meadow/index.html" class="underline hover:text-stone-900">The Inner Meadow</a></p>
+            </div>
+
             <p class="text-xs text-stone-500 leading-relaxed max-w-xl mx-auto">
                 <strong>Discharge Notice:</strong> Re-Poopulate provides practical food suggestions for gentle digestion and microbiome support. Always follow your physician or gastroenterologist's specific discharge instructions.
             </p>
@@ -414,6 +438,7 @@
                     <span class="text-[10px] text-stone-400 font-normal">views</span>
                     <span id="unique-visitor-tag" class="hidden text-[9px] bg-sage-100 text-sage-800 px-1.5 py-0.2 rounded-full font-bold">New Visitor</span>
                 </span>
+
             </div>
 
             <p class="text-[10px] text-stone-400 font-medium pt-1">
@@ -995,7 +1020,7 @@
                                 vegan: true,
                                 glutenFree: true,
                                 summary: "Soft pumpkin delivers high soluble fiber and beta-carotene to repair damaged intestinal villi.",
-                                science: "Soluble pectin in pumpkin forms a protective gel matrix that slows transit time, while provitamin A acts as a cofactor in epithelial cell turnover."
+                                science: "Soluble pectin in pumpkin forms a protective matrix that slows transit time, while provitamin A acts as a cofactor in epithelial cell turnover."
                             },
                             {
                                 id: "ab-p2-7",
@@ -1544,8 +1569,8 @@
 
             let foods = phase.foods.filter(food => {
                 const matchesSearch = food.name.toLowerCase().includes(searchQuery) || 
-                                     food.category.toLowerCase().includes(searchQuery) ||
-                                     food.summary.toLowerCase().includes(searchQuery);
+                                   food.category.toLowerCase().includes(searchQuery) ||
+                                   food.summary.toLowerCase().includes(searchQuery);
                 const matchesFilter = activeFilter === 'all' || food.rating === activeFilter;
                 
                 let matchesDiet = true;
