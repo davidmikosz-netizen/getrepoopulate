@@ -347,7 +347,7 @@
                 </p>
             </div>
 
-            <a href="https://venmo.com" target="_blank" rel="noopener noreferrer" class="block w-full py-3 bg-[#008CFF] hover:bg-blue-600 text-white font-bold rounded-2xl text-xs transition-colors shadow-md">
+            <a href="https://venmo.com/David-Mikosz" target="_blank" rel="noopener noreferrer" class="block w-full py-3 bg-[#008CFF] hover:bg-blue-600 text-white font-bold rounded-2xl text-xs transition-colors shadow-md">
                 Tip via Venmo 💙
             </a>
 
@@ -1352,7 +1352,7 @@
                                 science: "Enzyme output is restored, but high insoluble skin fiber can still cause minor cramps if motility is irritable."
                             },
                             {
-                                id: "fp-p3-5",
+                                id: "fp-p3-3",
                                 name: "Kombucha & Fermented Fizzy Tonics",
                                 category: "Beverages",
                                 rating: "Caution",
@@ -1363,7 +1363,7 @@
                                 science: "High acetic acid levels and active carbonation can irritate regenerating gastric mucosa and trigger unwanted belching and visceral hyper-sensitivity."
                             },
                             {
-                                id: "fp-p3-3",
+                                id: "fp-p3-5",
                                 name: "Ice Cream (Small Portion)",
                                 category: "Dairy / Sweets",
                                 rating: "Caution",
@@ -1569,8 +1569,8 @@
 
             let foods = phase.foods.filter(food => {
                 const matchesSearch = food.name.toLowerCase().includes(searchQuery) || 
-                                   food.category.toLowerCase().includes(searchQuery) ||
-                                   food.summary.toLowerCase().includes(searchQuery);
+                                     food.category.toLowerCase().includes(searchQuery) ||
+                                     food.summary.toLowerCase().includes(searchQuery);
                 const matchesFilter = activeFilter === 'all' || food.rating === activeFilter;
                 
                 let matchesDiet = true;
@@ -1669,7 +1669,6 @@
             const printContent = document.getElementById('print-content-area');
             printContent.innerHTML = '';
 
-            // Section 1: Recommended Foods for Phase 1 & 2 Grocery List
             const p1 = track.phases[0];
             const p2 = track.phases[1];
 
@@ -1697,7 +1696,6 @@
                 </div>
             `;
 
-            // Section 2: Items to Strictly Avoid Early On
             const avoidFoods = p1.foods.filter(f => f.rating === 'Avoid');
             if (avoidFoods.length > 0) {
                 html += `
@@ -1710,7 +1708,6 @@
                 `;
             }
 
-            // Section 3: User's Bookmarked Foods
             let allFoods = [];
             Object.values(TRACKS).forEach(t => t.phases.forEach(p => allFoods = allFoods.concat(p.foods)));
             const savedItems = allFoods.filter(f => savedFoods.includes(f.id));
@@ -1762,7 +1759,7 @@
         function sendFeedback(e) {
             e.preventDefault();
             const msg = document.getElementById('feedback-message').value;
-            window.location.href = `mailto:support@getrepoopulate.com?subject=Re-Poopulate%20Feedback&body=${encodeURIComponent(msg)}`;
+            window.location.href = `mailto:david.mikosz@gmail.com?subject=getrepoopulate.com%20Feedback&body=${encodeURIComponent(msg)}`;
             toggleFeedbackModal();
         }
     </script>
