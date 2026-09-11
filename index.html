@@ -450,7 +450,7 @@
     </footer>
 
     <script>
-        // Datasets for the three recovery tracks with realistic timeframes
+        // Datasets for the three recovery tracks with realistic timeframes (Expanded with robust veg/vegan/omnivore options across all phases)
         const TRACKS = {
             colonoscopy: {
                 name: "Post-Colonoscopy",
@@ -551,6 +551,28 @@
                                 glutenFree: true,
                                 summary: "Ultra-soft, delicate plant protein that glides over tender gut lining.",
                                 science: "Silken soy protein has undergone coagulation, removing tough fibers. Its soft structure requires virtually zero mechanical digestion in the stomach."
+                            },
+                            {
+                                id: "col-d1-19",
+                                name: "Steamed White Rice Cakes",
+                                category: "Grains",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Light, puffed or steamed white rice cakes offer simple low-residue nibbling energy.",
+                                science: "Extruded and puffed white rice provides easily absorbed carbohydrates that dissolve quickly with minimal mastication and digestive friction."
+                            },
+                            {
+                                id: "col-d1-20",
+                                name: "Organic Clear Apple Juice (Diluted)",
+                                category: "Beverages",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Diluted clear apple juice provides gentle fluid hydration and quick fruit carbohydrates.",
+                                science: "Filtering out all apple pulp leaves simple fructose and water with zero insoluble particulate matter, preventing mechanical irritation."
                             },
                             {
                                 id: "col-d1-8",
@@ -727,6 +749,28 @@
                                 science: "Delivers active transient strains (L. acidophilus, B. bifidum) in a plant-milk matrix, helping re-establish acidic luminal pH to deter pathogens."
                             },
                             {
+                                id: "col-d2-11",
+                                name: "Steamed Peeled Chayote Squash",
+                                category: "Produce",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Ultra-tender, peeled steamed chayote squash supplies soothing hydration and mild soluble fiber.",
+                                science: "Chayote flesh is exceptionally low in hard insoluble fibers and heavy sugars, making it an ideal gentle vegetable for early mucosal recovery."
+                            },
+                            {
+                                id: "col-d2-12",
+                                name: "Soft Steamed Tofu Cubes in Miso Broth",
+                                category: "Plant Protein",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Gentle soy protein paired with live unpasteurized miso broth for early probiotic seeding.",
+                                science: "Combines pre-digested soybean amino acids with live Aspergillus oryzae enzymes to gently stimulate digestive capacity without fiber overload."
+                            },
+                            {
                                 id: "col-d2-5",
                                 name: "Sourdough Bread (Toasted)",
                                 category: "Grains",
@@ -811,6 +855,28 @@
                                 glutenFree: true,
                                 summary: "Raw apples deliver rich pectin and quercetin polyphenols to lock in healthy flora.",
                                 science: "Apple skin quercetin and pectin fibers act as natural prebiotics that support diversity in your newly established microbial matrix."
+                            },
+                            {
+                                id: "col-d3-8",
+                                name: "Steamed Artichoke Hearts",
+                                category: "Prebiotic Vegetables",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Tender steamed artichoke hearts deliver exceptionally high inulin prebiotic fiber for deep gut flora.",
+                                science: "Artichokes are one of nature's richest sources of inulin, a fructooligosaccharide that selectively stimulates colonic Lactobacillus and Bifidobacterium growth."
+                            },
+                            {
+                                id: "col-d3-9",
+                                name: "Mashed White Beans (Cannellini) in Olive Oil",
+                                category: "Legumes",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Thoroughly cooked and mashed cannellini beans offer smooth prebiotic plant starches.",
+                                science: "Mashing legumes disrupts seed coat integrity, making resistant starches and slow carbohydrates readily available for bacterial fermentation without gas spikes."
                             },
                             {
                                 id: "col-d3-3",
@@ -915,6 +981,28 @@
                                 glutenFree: true,
                                 summary: "Warm fermented soy paste delivers live Aspergillus oryzae and beneficial enzymes while rehydrating.",
                                 science: "Traditional unpasteurized miso provides live probiotic strains and pre-digested amino acids; keeping temperatures under 115°F protects delicate bacterial enzymes from heat denaturation."
+                            },
+                            {
+                                id: "ab-p1-9",
+                                name: "Steamed Tempeh Strips",
+                                category: "Plant Protein & Ferments",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Steam-cooked whole soybean tempeh provides firm, pre-digested plant protein without dairy or sugar.",
+                                science: "Rhizopus fungal fermentation breaks down anti-nutritional factors in soy while providing clean, low-sugar amino acids that do not feed opportunistic yeasts."
+                            },
+                            {
+                                id: "ab-p1-10",
+                                name: "Avocado Mash on Rice Cakes",
+                                category: "Healthy Fats & Produce",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Creamy ripe avocado offers smooth monounsaturated fats and soluble potassium without sugar.",
+                                science: "Avocados contain virtually zero simple sugars (starving yeast) while supplying healthy oleic acid and soothing plant lipids for cell membranes."
                             },
                             {
                                 id: "ab-p1-7",
@@ -1025,6 +1113,28 @@
                                 science: "Soluble pectin in pumpkin forms a protective matrix that slows transit time, while provitamin A acts as a cofactor in epithelial cell turnover."
                             },
                             {
+                                id: "ab-p2-9",
+                                name: "Stewed Rhubarb with Stevia / Cinnamon",
+                                category: "Produce & Prebiotics",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Stewed tart rhubarb provides natural sennoside-free soluble plant pectin and protective anthraquinones.",
+                                science: "Soft-cooked rhubarb stalk fibers supply gentle viscous substrates for microbiome colonization while avoiding harsh stimulant laxative compounds found in root parts."
+                            },
+                            {
+                                id: "ab-p2-10",
+                                name: "Soaked Chia Seed Gel",
+                                category: "Prebiotic Mucilage",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Soaked chia seeds form a soothing hydrophilic gel that slows digestion and feeds beneficial bacteria.",
+                                science: "Hydrophilic mucilage coats the GI tract while soluble ALA omega-3 fatty acids downregulate inflammatory cytokine signaling in mucosal tissue."
+                            },
+                            {
                                 id: "ab-p2-7",
                                 name: "High-Protein Shiitake Mineral Broth",
                                 category: "Soups & Broths",
@@ -1098,6 +1208,28 @@
                                 glutenFree: true,
                                 summary: "Delivers diverse polyphenols and mucilage fiber to feed specialized bacterial strains.",
                                 science: "Bound polyphenols in flax and chia seeds are metabolized by gut bacteria into bioavailable anti-inflammatory urolithins."
+                            },
+                            {
+                                id: "ab-p3-7",
+                                name: "Mixed Chickpea & Walnut Hummus (Garlic-Light)",
+                                category: "Legumes & Healthy Fats",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Blended chickpeas and walnuts provide rich prebiotic fiber and beneficial plant omega fats.",
+                                science: "Pureeing legumes and blending with tahini/walnuts breaks down seed walls for efficient microbial fermentation while delivering diverse polyphenols."
+                            },
+                            {
+                                id: "ab-p3-8",
+                                name: "Fermented Black Garlic Cloves",
+                                category: "Fermented Prebiotics",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Aged fermented black garlic offers sweet, mellow flavor packed with S-allyl-cysteine antioxidants.",
+                                science: "Maillard aging converts harsh raw allicin into stable water-soluble S-allyl-cysteine, offering potent antioxidant and prebiotic support without sulfur burn."
                             },
                             {
                                 id: "ab-p3-4",
@@ -1193,6 +1325,28 @@
                                 science: "High concentrations of mucilaginous polysaccharides form a physical bio-adhesive protective film over irritated gastric mucosa, blunting acid contact."
                             },
                             {
+                                id: "fp-p1-8",
+                                name: "Slippery Elm Bark Tea (Warm)",
+                                category: "Herbal Teas",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Warm brewed slippery elm bark decoction coats and calms inflamed upper GI tract walls.",
+                                science: "Rich bio-polymers and mucilage swell in aqueous solution to create a soothing, viscous protective lining that shields denuded mucosal enterocytes from gastric acid."
+                            },
+                            {
+                                id: "fp-p1-9",
+                                name: "Clear Vegetable Broth with Kudzu Root Starch",
+                                category: "Soups & Thickeners",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Warm mineral broth thickened slightly with traditional kudzu root starch to soothe stomach upset.",
+                                science: "Kudzu (Pueraria lobata) starch provides gentle, easily digestible low-residue carbohydrates that bind loose fluids and calm hyper-irritable gastric tissue."
+                            },
+                            {
                                 id: "fp-p1-2",
                                 name: "Ice Cream & Milk Desserts",
                                 category: "Dairy",
@@ -1279,6 +1433,28 @@
                                 science: "Removing seeds and skin strips tough insoluble cellulose, leaving soft parenchymal plant tissue that absorbs easily without provoking mechanical friction."
                             },
                             {
+                                id: "fp-p2-8",
+                                name: "Steamed Peeled Malanga or Taro Root Puree",
+                                category: "Starchy Roots",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Thoroughly cooked and pureed taro or malanga root offers exceptionally easy-to-digest soothing starch.",
+                                science: "Tropical root starches feature extremely fine starch grain structures that undergo rapid gastric emptying and require minimal pancreatic enzyme effort."
+                            },
+                            {
+                                id: "fp-p2-9",
+                                name: "Mashed Organic Plain Plantain (Ripe & Soft)",
+                                category: "Starchy Fruits",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Soft-cooked ripe plantain provides soothing soluble carbohydrates and natural binding starches.",
+                                science: "Riper plantains convert tough resistant starches into easily assimilable glucose while retaining natural pectin structures that firm loose stools."
+                            },
+                            {
                                 id: "fp-p2-5",
                                 name: "Cream of Wheat / Farina (or Cream of Rice)",
                                 category: "Carbs & Grains",
@@ -1341,6 +1517,28 @@
                                 glutenFree: true,
                                 summary: "Soaked chia seeds form a soothing mucilage gel that binds stool and feeds good bacteria.",
                                 science: "Soluble mucilaginous polysaccharide fiber holds water in a matrix, stabilizing bowel transit time while providing a slow-release prebiotic substrate for colonic microflora."
+                            },
+                            {
+                                id: "fp-p3-6",
+                                name: "Well-Cooked Red Kidney Bean Puree (Refried Style, Low Oil)",
+                                category: "Legumes",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Thoroughly boiled and mashed red beans provide iron, protein, and prebiotic plant fiber.",
+                                science: "Extended cooking and mashing breaks down tough seed coats completely, ensuring plant proteins and oligosaccharides assimilate smoothly."
+                            },
+                            {
+                                id: "fp-p3-7",
+                                name: "Soft Steamed Edamame (Mashed)",
+                                category: "Plant Protein & Legumes",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Tender, lightly steamed and mashed green soybean edamame provides complete plant amino acids.",
+                                science: "Young soybeans offer high biological value protein with softer cellular structures than mature dried beans, making them ideal for post-bug re-entry."
                             },
                             {
                                 id: "fp-p3-2",
