@@ -354,8 +354,8 @@
                 </p>
             </div>
 
-            <a href="https://venmo.com/David-Mikosz" target="_blank" rel="noopener noreferrer" class="block w-full py-3 bg-[#008CFF] hover:bg-blue-600 text-white font-bold rounded-2xl text-xs transition-colors shadow-md">
-                Tip via Venmo 💙
+            <a href="https://buymeacoffee.com/davidmikosz" target="_blank" rel="noopener noreferrer" class="block w-full py-3 bg-[#FFDD00] hover:bg-[#FFD000] text-stone-900 font-extrabold rounded-2xl text-xs transition-colors shadow-md flex items-center justify-center gap-2">
+                <span>☕</span> Buy Me a Coffee
             </a>
 
             <button onclick="toggleTipModal()" class="text-xs font-bold text-stone-400 hover:text-stone-600">
@@ -1873,8 +1873,8 @@
 
             let foods = phase.foods.filter(food => {
                 const matchesSearch = food.name.toLowerCase().includes(searchQuery) || 
-                                     food.category.toLowerCase().includes(searchQuery) ||
-                                     food.summary.toLowerCase().includes(searchQuery);
+                                   food.category.toLowerCase().includes(searchQuery) ||
+                                   food.summary.toLowerCase().includes(searchQuery);
                 const matchesFilter = activeFilter === 'all' || food.rating === activeFilter;
                 
                 let matchesDiet = true;
