@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" class="h-full bg-[#FAF7F2]">
-
-<meta name="directree-verify" content="directree-verify=d8c71663c7af0719b70765785bb7456e">
-
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="directree-verify" content="directree-verify=d8c71663c7af0719b70765785bb7456e">
     <meta name="google-site-verification" content="GQEXnVD34qtcu27BNllYCz7ZvIW5tGdQHAVqg4gw3b0" />
-<!-- Open Graph / Facebook / iMessage Meta Tags -->
+
+    <!-- Open Graph / Facebook / iMessage Meta Tags -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://getrepoopulate.com/">
     <meta property="og:title" content="Re-Poopulate — Guided Help to Rebuild Your Gut Biome">
@@ -17,8 +19,7 @@
     <meta name="twitter:title" content="Re-Poopulate — Guided Help to Rebuild Your Gut Biome">
     <meta name="twitter:description" content="The practical guide on what to eat to rebuild a healthy gut biome after a colonoscopy, antibiotics, or food poisoning.">
     <meta name="twitter:image" content="https://getrepoopulate.com/og-preview.png">  
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
     <title>Re-Poopulate — Guided help to rebuild your gut biome</title>
 
     <!-- 1. PWA Web App Manifest (Inline) -->
@@ -176,13 +177,21 @@
             <p class="text-xs sm:text-sm text-sage-100 font-medium leading-relaxed max-w-xl mx-auto">
                 “The practical guide on what to eat to rebuild a healthy gut biome after a <strong class="text-white underline decoration-sage-300">colonoscopy</strong>, <strong class="text-white underline decoration-sage-300">antibiotics</strong>, or <strong class="text-white underline decoration-sage-300">food poisoning</strong>.”
             </p>
-            <div class="pt-1">
+            <div class="pt-1 flex flex-col sm:flex-row items-center justify-center gap-2.5">
                 <a href="presentation.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white text-sage-800 hover:bg-sage-50 font-extrabold text-xs sm:text-sm px-5 py-2.5 rounded-2xl transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
                     <span>📊</span>
                     <span>Explore the Interactive Science Deck</span>
                     <span class="text-xs text-sage-500">→</span>
                 </a>
+                <a href="https://youaremorethanyou.com" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-sage-800/80 hover:bg-sage-900 text-white font-extrabold text-xs sm:text-sm px-5 py-2.5 rounded-2xl transition-all border border-sage-400/40 shadow-md hover:shadow-lg hover:-translate-y-0.5">
+                    <span>🎙️</span>
+                    <span>Listen to the Companion Podcast</span>
+                    <span class="text-xs text-sage-300">↗</span>
+                </a>
             </div>
+            <p class="text-[11px] text-sage-200 font-medium pt-0.5">
+                🎧 Hear Sir David Detail &amp; Ms. Julia Practical explain the 3-day recovery protocol on <em>You Are More Than You</em>.
+            </p>
         </div>
     </section>
 
@@ -425,7 +434,15 @@
             <!-- Corridor II Anthology Callout -->
             <div class="bg-white/60 border border-stone-200/80 rounded-2xl p-3 max-w-md mx-auto text-xs text-stone-600 space-y-1">
                 <p class="font-semibold text-stone-900">🌿 Part of the fallow.garden Anthology</p>
-                <p class="text-[11px] text-stone-500">Explore companion biological utilities: <a href="https://fallow.garden/episodes/multitude/index.html" class="underline hover:text-stone-900">The Multitudes Within</a> • <a href="https://fallow.garden/episodes/inner-meadow/index.html" class="underline hover:text-stone-900">The Inner Meadow</a></p>
+                <p class="text-[11px] text-stone-500">Explore companion biological utilities: <a href="https://fallow.garden/episodes/multitudes/index.html" class="underline hover:text-stone-900">The Multitudes Within</a> • <a href="https://fallow.garden/episodes/inner-meadow/index.html" class="underline hover:text-stone-900">The Inner Meadow</a></p>
+            </div>
+
+            <!-- Research Distinction & Disclaimer Note -->
+            <div class="bg-white/50 border border-stone-200/80 rounded-2xl p-3.5 max-w-xl mx-auto text-[11px] text-stone-500 leading-relaxed text-left space-y-1">
+                <p class="font-bold text-stone-700">⚖️ Research Distinction &amp; Disclaimer:</p>
+                <p>
+                    <strong>getrepoopulate.com</strong> is an independent educational and dietary self-care guide focusing exclusively on gentle food recovery (soothing broths, soluble pectins, and mild ferments). It is completely unaffiliated with, distinct from, and not related to the 2012–2013 synthetic stool substitute / fecal microbiota transplant (FMT) clinical research study colloquially titled <em>"RePOOPulate"</em> (Petrof et al.). This site does not provide medical advice or clinical protocols; always consult your physician or gastroenterologist regarding post-procedure recovery.
+                </p>
             </div>
 
             <p class="text-xs text-stone-500 leading-relaxed max-w-xl mx-auto">
@@ -2006,7 +2023,7 @@
                     <div class="border border-red-200 rounded-xl p-4 bg-red-50/50">
                         <h3 class="font-bold text-xs text-red-800 uppercase tracking-wider mb-2">🛑 Items to Avoid During Early Recovery</h3>
                         <ul class="list-disc list-inside space-y-1 text-xs text-gray-700">
-                            ${avoidFoods.map(f => `<li><strong>${f.name}</strong> — ${f.summary}</li>`).join('')}
+                            ${avoidFoods.map(f => `<li><strong>${f.name}</strong> —${f.summary}</li>`).join('')}
                         </ul>
                     </div>
                 `;
@@ -2084,6 +2101,6 @@
         });
       }
     </script>
-<script defer src="/_vercel/insights/script.js"></script>
+    <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
