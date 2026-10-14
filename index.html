@@ -260,7 +260,7 @@
         <!-- Search & Filter Controls -->
         <div class="space-y-3">
             <div class="relative">
-                <input type="text" id="food-search" oninput="renderFoods()" placeholder="Search food (e.g. Millet, Sorghum, Buckwheat, Oatmeal, Tofu, Broth)..." 
+                <input type="text" id="food-search" oninput="renderFoods()" placeholder="Search food (e.g. Millet, Sorghum, Buckwheat, Daikon, Tofu)..." 
                     class="w-full pl-10 pr-4 py-3 bg-white border border-stone-200 rounded-2xl text-sm placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-sage-500 focus:border-transparent shadow-sm">
                 <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400">
                     🔍
@@ -498,6 +498,17 @@
                                 science: "Extended boiling gelatinizes amylose starches, making them rapidly absorbable with minimal pancreatic enzyme output."
                             },
                             {
+                                id: "col-d1-23",
+                                name: "Soft Boiled Bottle Gourd (Lauki / Opo Squash)",
+                                category: "Produce",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "An Ayurvedic healing staple. Extremely high in water and easy to digest, perfect for calming an upset gut.",
+                                science: "Composed of ~96% water with negligible insoluble cellulose. It provides gentle hydration and potassium without demanding mechanical breakdown from the stomach."
+                            },
+                            {
                                 id: "col-d1-21",
                                 name: "Clear Dashi Broth",
                                 category: "Soups & Broths",
@@ -630,6 +641,17 @@
                                 science: "Cooking apples breaks down structural plant walls, releasing soluble pectin that forms a gelatinous protective layer over mucosal tissue."
                             },
                             {
+                                id: "col-d1-22",
+                                name: "Raw Daikon / Spicy Pickled Radish",
+                                category: "Produce / Pungent",
+                                rating: "Avoid",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Avoid raw or spicy pickled radish early on; pungent mustard oils can irritate an empty, sensitive gut.",
+                                science: "Raw brassica roots contain pungent glucosinolates and allyl isothiocyanates that stimulate gastric acid release and irritate un-mucinized epithelial tissue."
+                            },
+                            {
                                 id: "col-d1-10",
                                 name: "Raw Whole Apples (with skin)",
                                 category: "Produce",
@@ -726,6 +748,28 @@
                         title: "Reintroduce Live Flora",
                         description: "Your lining is stabilizing. Start seeding live bacterial cultures into your clean slate with gentle fermented foods and mild starches.",
                         foods: [
+                            {
+                                id: "col-d2-23",
+                                name: "Simmered Daikon Radish (Cooked Soft)",
+                                category: "Produce & Digestive Enzymes",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Simmered daikon is an East Asian comfort staple that supplies gentle digestive enzymes and soft soluble fiber.",
+                                science: "Cooking softens daikon's fibrous structure while preserving heat-stable diastase enzymes that assist in carbohydrate breakdown without irritating recovering mucosal tissue."
+                            },
+                            {
+                                id: "col-d2-24",
+                                name: "Boiled Lotus Root (Renkon / Yeongeun) in Soup",
+                                category: "Produce & Mucilage",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "A traditional Asian healing root rich in soothing mucilage and gentle complex starches.",
+                                science: "Lotus root contains mucin-like glycoproteins and tannin astringents that coat inflamed intestinal walls and reduce mucosal permeability."
+                            },
                             {
                                 id: "col-d2-21",
                                 name: "Steamed Idli (Fermented Rice & Lentil Cakes)",
@@ -1201,6 +1245,28 @@
                         description: "Bacterial populations are beginning to recolonize. Provide gel-forming soluble fibers that feed friendly Bifidobacteria without irritating tender mucosa.",
                         foods: [
                             {
+                                id: "ab-p2-23",
+                                name: "Simmered Daikon Radish (Cooked Soft)",
+                                category: "Produce & Digestive Enzymes",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Simmered daikon is an East Asian comfort staple that supplies gentle digestive enzymes and soft soluble fiber.",
+                                science: "Cooking softens daikon's fibrous structure while preserving heat-stable diastase enzymes that assist in carbohydrate breakdown without irritating recovering mucosal tissue."
+                            },
+                            {
+                                id: "ab-p2-24",
+                                name: "Boiled Lotus Root (Renkon / Yeongeun) in Soup",
+                                category: "Produce & Mucilage",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "A traditional Asian healing root rich in soothing mucilage and gentle complex starches.",
+                                science: "Lotus root contains mucin-like glycoproteins and tannin astringents that coat inflamed intestinal walls and reduce mucosal permeability."
+                            },
+                            {
                                 id: "ab-p2-21",
                                 name: "Steamed Kabocha Squash (Japanese Pumpkin)",
                                 category: "Produce",
@@ -1468,6 +1534,17 @@
                         description: "Your stomach suffered acute infectious inflammation. Prioritize fluid retention, electrolytes, and zero-fiber soothing liquids.",
                         foods: [
                             {
+                                id: "fp-p1-23",
+                                name: "Soft Boiled Bottle Gourd (Lauki / Opo Squash)",
+                                category: "Produce",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "An Ayurvedic healing staple. Extremely high in water and easy to digest, perfect for calming an upset gut.",
+                                science: "Composed of ~96% water with negligible insoluble cellulose. It provides gentle hydration and potassium without demanding mechanical breakdown from the stomach."
+                            },
+                            {
                                 id: "fp-p1-1",
                                 name: "Coconut Water & Oral Rehydration Solution",
                                 category: "Beverages",
@@ -1545,6 +1622,17 @@
                                 science: "Kudzu (Pueraria lobata) starch provides gentle, easily digestible low-residue carbohydrates that bind loose fluids and calm hyper-irritable gastric tissue."
                             },
                             {
+                                id: "fp-p1-22",
+                                name: "Raw Daikon / Spicy Pickled Radish",
+                                category: "Produce / Pungent",
+                                rating: "Avoid",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Avoid raw or spicy pickled radish early on; pungent mustard oils can irritate an empty, sensitive gut.",
+                                science: "Raw brassica roots contain pungent glucosinolates and allyl isothiocyanates that stimulate gastric acid release and irritate un-mucinized epithelial tissue."
+                            },
+                            {
                                 id: "fp-p1-2",
                                 name: "Ice Cream & Milk Desserts",
                                 category: "Dairy",
@@ -1586,6 +1674,28 @@
                         title: "Stabilize Stool & Motility",
                         description: "Introduce soft, low-residue binding foods (BRAT principles) to absorb excess fluid and quiet intestinal spasms.",
                         foods: [
+                            {
+                                id: "fp-p2-23",
+                                name: "Simmered Daikon Radish (Cooked Soft)",
+                                category: "Produce & Digestive Enzymes",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "Simmered daikon is an East Asian comfort staple that supplies gentle digestive enzymes and soft soluble fiber.",
+                                science: "Cooking softens daikon's fibrous structure while preserving heat-stable diastase enzymes that assist in carbohydrate breakdown without irritating recovering mucosal tissue."
+                            },
+                            {
+                                id: "fp-p2-24",
+                                name: "Boiled Lotus Root (Renkon / Yeongeun) in Soup",
+                                category: "Produce & Mucilage",
+                                rating: "Recommended",
+                                vegetarian: true,
+                                vegan: true,
+                                glutenFree: true,
+                                summary: "A traditional Asian healing root rich in soothing mucilage and gentle complex starches.",
+                                science: "Lotus root contains mucin-like glycoproteins and tannin astringents that coat inflamed intestinal walls and reduce mucosal permeability."
+                            },
                             {
                                 id: "fp-p2-21",
                                 name: "Steamed Egg Custard (Chawanmushi / Gyeran-jjim)",
@@ -2200,7 +2310,7 @@
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('data:text/javascript,' + encodeURIComponent(`
-            const CACHE_NAME = 'repoopulate-v7';
+            const CACHE_NAME = 'repoopulate-v8';
             self.addEventListener('install', e => {
               e.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(['/'])));
             });
